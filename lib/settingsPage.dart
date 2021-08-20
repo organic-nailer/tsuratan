@@ -18,14 +18,12 @@ class SettingsPage extends StatelessWidget {
             new Divider(),
             new ListTile(
               title: Text("遊び方"),
-              subtitle: Text(
-                "つらたん...な気分のあなた。 \n"
-                    + "そのつらたんさを原動力にタップしまくりましょう \n"
-                    + "スコア表示は弾けます \n"
-                    + "「10つらたん」を押すと10加算されますよ \n"
-                    + "トップ画面では全世界の遊んだ合計がみられます \n"
-                    + "Twitterマークを押してつらたんさを共有しよう"
-              ),
+              subtitle: Text("つらたん...な気分のあなた。 \n" +
+                  "そのつらたんさを原動力にタップしまくりましょう \n" +
+                  "スコア表示は弾けます \n" +
+                  "「10つらたん」を押すと10加算されますよ \n" +
+                  "トップ画面では全世界の遊んだ合計がみられます \n" +
+                  "Twitterマークを押してつらたんさを共有しよう"),
             ),
             new ListTile(
               title: Text("OpenSource Licence"),

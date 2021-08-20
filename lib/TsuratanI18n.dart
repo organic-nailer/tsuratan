@@ -1,4 +1,3 @@
-
 import 'dart:math' as math;
 
 const List<String> internationalTsuratan = [
@@ -104,14 +103,14 @@ const List<String> internationalTsuratan = [
 ];
 
 String randomTsuratan() {
-  return internationalTsuratan[(new math.Random()).nextInt(internationalTsuratan.length)];
+  return internationalTsuratan[
+      (new math.Random()).nextInt(internationalTsuratan.length)];
 }
 
 String randomTsuratanVSTsuratan() {
-  if((new math.Random()).nextBool()) {
+  if ((new math.Random()).nextBool()) {
     return "つらたん";
-  }
-  else {
+  } else {
     return randomTsuratan();
   }
 }

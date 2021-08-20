@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 
 class RandomAppearButtonData {
-  double x,y;
+  double x, y;
   final int score;
   bool appear;
 

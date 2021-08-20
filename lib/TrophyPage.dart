@@ -51,25 +51,23 @@ const List<Trophy> trophies = [
 ];
 
 Future<bool> isAchieved(int index) async {
-  if(index >= trophies.length) return true;
+  if (index >= trophies.length) return true;
 
   SharedPreferences prefs = await SharedPreferences.getInstance();
   return prefs.getBool(trophies[index].title) == true;
 }
 
 void setAchieved(int index) async {
-  if(index >= trophies.length) return;
+  if (index >= trophies.length) return;
 
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setBool(trophies[index].title, true);
 }
 
 Future<List<TrophyWithAchieved>> getTrophyAchieved() async {
-  return Future.wait(trophies.mapIndexed((i,e) async {
+  return Future.wait(trophies.mapIndexed((i, e) async {
     bool achieved = await isAchieved(i);
-    return TrophyWithAchieved(
-      e, i, achieved
-    );
+    return TrophyWithAchieved(e, i, achieved);
   }).toList());
 }
 
@@ -79,7 +77,6 @@ class TrophyPage extends StatefulWidget {
 }
 
 class TrophyPageState extends State<TrophyPage> {
-
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
@@ -99,14 +96,14 @@ class TrophyPageState extends State<TrophyPage> {
     var allAchieved = true;
     data.forEach((element) {
       print("${element.index}, ${element.isAchieved}, ${element.trophy.title}");
-      if(element.index != 13 && !element.isAchieved) {
+      if (element.index != 13 && !element.isAchieved) {
         allAchieved = false;
       }
     });
 
-    if(allAchieved) {
+    if (allAchieved) {
       setAchieved(13);
-      _scaffoldKey.currentState.showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("獲得: ${trophies[13].title}"),
       ));
     }
@@ -121,44 +118,40 @@ class TrophyPageState extends State<TrophyPage> {
       ),
       body: Center(
         child: FutureBuilder<List<TrophyWithAchieved>>(
-          future: getTrophyAchieved(),
-          builder: (context, snapshot) {
-            if(!snapshot.hasData) return Text("loading...");
+            future: getTrophyAchieved(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) return Text("loading...");
 
-            return CarouselSlider(
-              options: CarouselOptions(
-                aspectRatio: 0.8,
-                viewportFraction: 0.8,
-                reverse: false,
-                enableInfiniteScroll: false,
-              ),
-              items: snapshot.data.map((e) {
-                return Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: Card(
-                    child: Column(
-                      children: <Widget>[
-                        Text(
-                            e.trophy.title,
-                          style: TextStyle(
-                            fontSize: 30.0
-                          ),
-                        ),
-                        Image.asset(e.isAchieved ? "image/torofi_gold.png" : "image/torofi_gray.png"),
-                        Text(
-                            e.trophy.description,
-                          style: TextStyle(
-                            fontSize: 20.0
-                          ),
-                        )
-                      ],
-                    ),
+              return CarouselSlider(
+                  options: CarouselOptions(
+                    aspectRatio: 0.8,
+                    viewportFraction: 0.8,
+                    reverse: false,
+                    enableInfiniteScroll: false,
                   ),
-                );
-              }).toList()
-            );
-          }
-        ),
+                  items: snapshot.data.map((e) {
+                    return Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: Card(
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                              e.trophy.title,
+                              style: TextStyle(fontSize: 30.0),
+                            ),
+                            Image.asset(e.isAchieved
+                                ? "image/torofi_gold.png"
+                                : "image/torofi_gray.png"),
+                            Text(
+                              e.trophy.description,
+                              style: TextStyle(fontSize: 20.0),
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  }).toList());
+            }),
       ),
     );
   }
@@ -168,7 +161,7 @@ extension MyList<E, T> on List<T> {
   //https://stackoverflow.com/questions/54898767/enumerate-or-map-through-a-list-with-index-and-value-in-dart のやつを拡張関数に書き換えたやつ
   List<E> mapIndexed<E>(E Function(int index, T item) f) {
     var index = 0;
-    var ret = List<E>();
+    var ret = [];
 
     for (final item in this) {
       ret.add(f(index, item));

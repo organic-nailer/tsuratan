@@ -17,15 +17,14 @@ environment:
   sdk: ">=2.6.0 <3.0.0"
 
 dependencies:
-  english_words: ^3.1.5
-  firestore_ref:
-    path: ./flutter_firestore_ref/
-  fb_auth: ^1.1.0
-  shared_preferences: ^0.5.6+1
-  url_launcher: ^5.4.1
-  flutter_share: ^1.0.2+1
-  carousel_slider: ^2.1.0
-  flutter_audio_player: ^0.1.2
+  english_words: ^4.0.0
+  # firestore_ref:
+  #   path: ./flutter_firestore_ref/
+  # fb_auth: ^1.1.0
+  shared_preferences: ^2.0.6
+  url_launcher: ^6.0.9
+  flutter_share: ^2.0.0
+  carousel_slider: ^4.0.0
   flutter_localizations:
     sdk: flutter
   flutter:
@@ -33,10 +32,12 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.2
+  cupertino_icons: ^1.0.3
+  audioplayers: ^0.19.1
+  firedart: ^0.9.0+1
 
 dev_dependencies:
-  flutter_launcher_icons: ^0.7.4
+  flutter_launcher_icons: ^0.9.1
   flutter_test:
     sdk: flutter
 
@@ -44,8 +45,8 @@ flutter_icons:
   android: "launcher_icon"
   image_path: "image/Tsuratan_logo.png"
 
-dependency_overrides:
- firebase: ^7.1.0
+# dependency_overrides:
+#  firebase: ^7.1.0
 
 
 # For information on the generic Dart part of this file, see the

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -15,27 +16,20 @@ import 'dart:math' as math;
 import 'package:tsuratan/FloatingTsuratan.dart';
 import 'package:tsuratan/SwimmingPositioned.dart';
 
-import 'package:firestore_ref/firestore_ref.dart';
-import 'package:fb_auth/fb_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter_audio_player/flutter_audio_player.dart';
 
 void main() => runApp(MyApp());
-
-//TODO: firestore_refにIssue立てる
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'つらたん',
-      theme: ThemeData(
-        primarySwatch: Colors.indigo,
-        fontFamily: "Noto Sans JP"
-        //fontFamily: "Hiragino Sans",
-      ),
+      theme: ThemeData(primarySwatch: Colors.indigo, fontFamily: "Noto Sans JP"
+          //fontFamily: "Hiragino Sans",
+          ),
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -45,11 +39,10 @@ class MyApp extends StatelessWidget {
       ],
       locale: Locale("ja", "JP"),
       home: DefaultTextStyle.merge(
-        style: TextStyle(
-          height: 1.5,
-        ),
-          child: MainPage()
-      ),
+          style: TextStyle(
+            height: 1.5,
+          ),
+          child: MainPage()),
     );
   }
 }
@@ -57,38 +50,34 @@ class MyApp extends StatelessWidget {
 class MainPage extends StatefulWidget {
   final bool startVisible;
 
-  MainPage({Key key, this.startVisible = true}): super(key: key);
+  MainPage({Key key, this.startVisible = true}) : super(key: key);
 
   @override
   _MainPageState createState() => _MainPageState();
 }
 
 const TextStyle scoreTextStyle = TextStyle(
-  color: Colors.deepOrange,
-  fontSize: 30.0,
-  fontWeight: FontWeight.w900,
-  shadows: [
-    Shadow(offset: Offset(1.0,1.0))
-  ]
-);
+    color: Colors.deepOrange,
+    fontSize: 30.0,
+    fontWeight: FontWeight.w900,
+    shadows: [Shadow(offset: Offset(1.0, 1.0))]);
 
 void saveData(score, oneClicked, tenClicked, hunClicked, thoClicked) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  var userNickName = prefs.getString("USER_NAME")
-      ?? "Mx." + generateWordPairs().first.asString.toUpperCase();
+  var userNickName = prefs.getString("USER_NAME") ??
+      "Mx." + generateWordPairs().first.asString.toUpperCase();
   prefs.setString("USER_NAME", userNickName);
   sendData(score, userNickName, oneClicked, tenClicked, hunClicked, thoClicked);
 }
 
 class _MainPageState extends State<MainPage> {
-
   final _arrangeController = StreamController<bool>.broadcast();
   Sink get arrangeSink => _arrangeController;
   Stream<bool> get arrangeStream => _arrangeController.stream;
 
   @override
   void dispose() {
-    if(!startVisible) {
+    if (!startVisible) {
       saveData(score, oneClicked, tenClicked, hunClicked, thoClicked);
     }
 
@@ -108,7 +97,7 @@ class _MainPageState extends State<MainPage> {
   List<FloatingTsuratan> tsuratanium = [];
   List<FallingCredit> rakutanium = [];
 
-  final _auth = AuthBloc(app: null);
+  // final _auth = AuthBloc(app: null);
 
   @override
   void initState() {
@@ -116,7 +105,7 @@ class _MainPageState extends State<MainPage> {
     startVisible = widget.startVisible;
     score = 0;
 
-    _auth.add(LoginGuest());
+    //_auth.add(LoginGuest());
   }
 
   @override
@@ -132,37 +121,37 @@ class _MainPageState extends State<MainPage> {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    if(!(await isAchieved(4))) {
+    if (!(await isAchieved(4))) {
       var totalTanni = prefs.getInt("TOTAL_TANNI") ?? 0;
 
-      if(totalTanni >= 100) {
+      if (totalTanni >= 100) {
         setAchieved(4);
         getTrophy(trophies[4].title);
       }
     }
 
-    if(!(await isAchieved(11))) {
+    if (!(await isAchieved(11))) {
       var totalScore = prefs.getInt("TOTAL_SCORE") ?? 0;
 
-      if(totalScore >= 100000) {
+      if (totalScore >= 100000) {
         setAchieved(11);
         getTrophy(trophies[11].title);
       }
     }
 
-    if(!(await isAchieved(12))) {
+    if (!(await isAchieved(12))) {
       var totalScore = prefs.getInt("TOTAL_SCORE") ?? 0;
 
-      if(totalScore >= 1000000) {
+      if (totalScore >= 1000000) {
         setAchieved(12);
         getTrophy(trophies[12].title);
       }
     }
 
-    if(!(await isAchieved(2))) {
+    if (!(await isAchieved(2))) {
       var nickName = prefs.getString("USER_NAME") ?? "Mx.";
 
-      if(!nickName.contains("Mx.")) {
+      if (!nickName.contains("Mx.")) {
         setAchieved(2);
         getTrophy(trophies[2].title);
       }
@@ -178,13 +167,12 @@ class _MainPageState extends State<MainPage> {
   final thoButton = RandomAppearButtonData(1000, -1000, -1000, false);
 
   void incrementScore(int value, BuildContext context) async {
-
-    if(score == 0 && value == 1 && !(await isAchieved(0))) {
+    if (score == 0 && value == 1 && !(await isAchieved(0))) {
       setAchieved(0);
       getTrophy(trophies[0].title);
     }
 
-    if(value == 10 && !(await isAchieved(1))) {
+    if (value == 10 && !(await isAchieved(1))) {
       setAchieved(1);
       getTrophy(trophies[1].title);
     }
@@ -194,43 +182,47 @@ class _MainPageState extends State<MainPage> {
     fireTuratan(value, boxSize);
     setState(() {
       score += value;
-      if(score == 10) {
+      if (score == 10) {
         tenButton.update(boxSize.width, boxSize.height);
-      }
-      else if(score == 100) {
+      } else if (score == 100) {
         hunButton.update(boxSize.width, boxSize.height);
-      }
-      else if(score == 1000) {
+      } else if (score == 1000) {
         thoButton.update(boxSize.width, boxSize.height);
       }
     });
 
-    if(score >= 1000 && tenClicked == 0 && hunClicked == 0 && !(await isAchieved(9))) {
+    if (score >= 1000 &&
+        tenClicked == 0 &&
+        hunClicked == 0 &&
+        !(await isAchieved(9))) {
       setAchieved(9);
       getTrophy(trophies[9].title);
     }
 
-    if(score == 10000
-        && oneClicked == 10 && tenClicked == 9 && hunClicked == 9 && thoClicked == 9
-        && !(await isAchieved(10))) {
+    if (score == 10000 &&
+        oneClicked == 10 &&
+        tenClicked == 9 &&
+        hunClicked == 9 &&
+        thoClicked == 9 &&
+        !(await isAchieved(10))) {
       setAchieved(10);
       getTrophy(trophies[10].title);
     }
 
-    if(score >= 10000 && !(await isAchieved(8))) {
+    if (score >= 10000 && !(await isAchieved(8))) {
       setAchieved(8);
       getTrophy(trophies[8].title);
     }
   }
 
   void getTrophy(String title) {
-    _scaffoldKey?.currentState?.showSnackBar(SnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text("獲得: $title"),
     ));
   }
 
   void dropUnko(BuildContext context) async {
-    if(tanni == 0 && !(await isAchieved(3))) {
+    if (tanni == 0 && !(await isAchieved(3))) {
       setAchieved(3);
       getTrophy(trophies[3].title);
     }
@@ -245,7 +237,6 @@ class _MainPageState extends State<MainPage> {
         fontSize: (math.Random().nextDouble() + 0.2) * 50,
       ));
     });
-
   }
 
   void fireTuratan(int value, Size boxSize) {
@@ -253,340 +244,365 @@ class _MainPageState extends State<MainPage> {
       startX: math.Random().nextDouble() * boxSize.width,
       startY: boxSize.height + 10.0,
       endY: -10.0,
-      fontSize:
-        value < 10 ? 40.0
-        : value < 100 ? 50.0
-        : value < 1000 ? 60.0
-        : 70.0,
+      fontSize: value < 10
+          ? 40.0
+          : value < 100
+              ? 50.0
+              : value < 1000
+                  ? 60.0
+                  : 70.0,
     ));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
-      body: SafeArea(
-        child: Stack(
-          children: <Widget>[
-            Positioned.fill(
-              child: Stack(
-                children: rakutanium,
+        key: _scaffoldKey,
+        body: SafeArea(
+          child: Stack(
+            children: <Widget>[
+              Positioned.fill(
+                child: Stack(
+                  children: rakutanium,
+                ),
               ),
-            ),
-            Positioned.fill(
-              child: Stack(
-                key: _floatingStack,
-                children: tsuratanium,
+              Positioned.fill(
+                child: Stack(
+                  key: _floatingStack,
+                  children: tsuratanium,
+                ),
               ),
-            ),
-            Positioned.fill(
-              child: GestureDetector(
-                onTap: () async {
-                  oneClicked++;
-                  incrementScore(1, context);
+              Positioned.fill(
+                child: GestureDetector(
+                  onTap: () async {
+                    oneClicked++;
+                    incrementScore(1, context);
 
-                  if(oneClicked > 10000 && (new math.Random()).nextInt(1000) == 334) {
-                    var boxSize = context.size;
-                    setState(() {
-                      thoButton.update(boxSize.width, boxSize.height);
-                      hunButton.update(boxSize.width, boxSize.height);
-                      tenButton.update(boxSize.width, boxSize.height);
-                    });
-                  }
-                },
+                    if (oneClicked > 10000 &&
+                        (new math.Random()).nextInt(1000) == 334) {
+                      var boxSize = context.size;
+                      setState(() {
+                        thoButton.update(boxSize.width, boxSize.height);
+                        hunButton.update(boxSize.width, boxSize.height);
+                        tenButton.update(boxSize.width, boxSize.height);
+                      });
+                    }
+                  },
+                ),
               ),
-            ),
-            Positioned.fill(
-              child: SwimmingStack(
+              Positioned.fill(
+                  child: SwimmingStack(
                 children: <Widget>[
-                  Text("${(score / 100000).floor() % 10}", style: scoreTextStyle,),
-                  Text("${(score / 10000).floor() % 10}", style: scoreTextStyle,),
-                  Text("${(score / 1000).floor() % 10}", style: scoreTextStyle,),
-                  Text("${(score / 100).floor() % 10}", style: scoreTextStyle,),
-                  Text("${(score / 10).floor() % 10}", style: scoreTextStyle,),
-                  Text("${(score / 1).floor() % 10}", style: scoreTextStyle,),
-                  Text("T", style: scoreTextStyle,),
+                  Text(
+                    "${(score / 100000).floor() % 10}",
+                    style: scoreTextStyle,
+                  ),
+                  Text(
+                    "${(score / 10000).floor() % 10}",
+                    style: scoreTextStyle,
+                  ),
+                  Text(
+                    "${(score / 1000).floor() % 10}",
+                    style: scoreTextStyle,
+                  ),
+                  Text(
+                    "${(score / 100).floor() % 10}",
+                    style: scoreTextStyle,
+                  ),
+                  Text(
+                    "${(score / 10).floor() % 10}",
+                    style: scoreTextStyle,
+                  ),
+                  Text(
+                    "${(score / 1).floor() % 10}",
+                    style: scoreTextStyle,
+                  ),
+                  Text(
+                    "T",
+                    style: scoreTextStyle,
+                  ),
                 ],
                 arrangeStream: arrangeStream,
                 scaffoldkey: _scaffoldKey,
-              )
-            ),
-            Positioned.fill(
-              child: Stack(
-                children: <Widget>[
-                  Positioned(
-                    left: thoButton.x,
-                    top: thoButton.y,
-                    child: OutlineButton(
-                      onPressed: () {
-                        var boxSize = context.size;
-                        setState(() {
-                          thoClicked++;
-                          incrementScore(thoButton.score, context);
-                          thoButton.update(boxSize.width, boxSize.height);
-                        });
-                      },
-                      child: Text(
-                        "1000つらたん",
-                        style: TextStyle(
-                            fontSize: 20.0,
-                            color: Color(0x40673AB7)
+              )),
+              Positioned.fill(
+                child: Stack(
+                  children: <Widget>[
+                    Positioned(
+                      left: thoButton.x,
+                      top: thoButton.y,
+                      child: OutlinedButton(
+                        onPressed: () {
+                          var boxSize = context.size;
+                          setState(() {
+                            thoClicked++;
+                            incrementScore(thoButton.score, context);
+                            thoButton.update(boxSize.width, boxSize.height);
+                          });
+                        },
+                        child: Text(
+                          "1000つらたん",
+                          style: TextStyle(
+                              fontSize: 20.0, color: Color(0x40673AB7)),
+                        ),
+                        style: OutlinedButton.styleFrom(
+                          side: BorderSide(color: Color(0x40673AB7)),
+                          backgroundColor: Colors.transparent,
+                          shape: StadiumBorder(),
                         ),
                       ),
-                      borderSide: BorderSide(color: Color(0x40673AB7)),
-                      color: Colors.transparent,
-                      shape: StadiumBorder(),
                     ),
-                  ),
-                  Positioned(
-                    left: hunButton.x,
-                    top: hunButton.y,
-                    child: OutlineButton(
-                      onPressed: () {
-                        var boxSize = context.size;
-                        setState(() {
-                          hunClicked++;
-                          incrementScore(hunButton.score, context);
-                          hunButton.update(boxSize.width, boxSize.height);
-                        });
-                      },
-                      child: Text(
-                        "100つらたん",
-                        style: TextStyle(
-                            fontSize: 20.0,
-                            color: Color(0x402196F3)
+                    Positioned(
+                      left: hunButton.x,
+                      top: hunButton.y,
+                      child: OutlinedButton(
+                        onPressed: () {
+                          var boxSize = context.size;
+                          setState(() {
+                            hunClicked++;
+                            incrementScore(hunButton.score, context);
+                            hunButton.update(boxSize.width, boxSize.height);
+                          });
+                        },
+                        child: Text(
+                          "100つらたん",
+                          style: TextStyle(
+                              fontSize: 20.0, color: Color(0x402196F3)),
+                        ),
+                        style: OutlinedButton.styleFrom(
+                          side: BorderSide(color: Color(0x402196F3)),
+                          backgroundColor: Colors.transparent,
+                          shape: StadiumBorder(),
                         ),
                       ),
-                      borderSide: BorderSide(color: Color(0x402196F3)),
-                      color: Colors.transparent,
-                      shape: StadiumBorder(),
                     ),
-                  ),
-                  Positioned(
-                    left: tenButton.x,
-                    top: tenButton.y,
-                    child: OutlineButton(
-                      onPressed: () {
-                        var boxSize = context.size;
-                        setState(() {
-                          tenClicked++;
-                          incrementScore(tenButton.score, context);
-                          tenButton.update(boxSize.width, boxSize.height);
-                        });
-                      },
-                      child: Text(
+                    Positioned(
+                      left: tenButton.x,
+                      top: tenButton.y,
+                      child: OutlinedButton(
+                        onPressed: () {
+                          var boxSize = context.size;
+                          setState(() {
+                            tenClicked++;
+                            incrementScore(tenButton.score, context);
+                            tenButton.update(boxSize.width, boxSize.height);
+                          });
+                        },
+                        child: Text(
                           "10つらたん",
                           style: TextStyle(
-                            fontSize: 20.0,
-                            color: Color(0x4000BCD4)
-                          ),
+                              fontSize: 20.0, color: Color(0x4000BCD4)),
+                        ),
+                        style: OutlinedButton.styleFrom(
+                          side: BorderSide(color: Color(0x4000BCD4)),
+                          backgroundColor: Colors.transparent,
+                          shape: StadiumBorder(),
+                        ),
                       ),
-                      borderSide: BorderSide(color: Color(0x4000BCD4)),
-                      color: Colors.transparent,
-                      shape: StadiumBorder(),
+                    ),
+                    Positioned(
+                      left: 0,
+                      bottom: 0,
+                      child: TextButton(
+                        onPressed: () async {
+                          if (score == 0 &&
+                              tanni == 0 &&
+                              !(await isAchieved(5))) {
+                            setAchieved(5);
+                            getTrophy(trophies[5].title);
+                          }
+
+                          finishDialog(context, score, tanni, oneClicked,
+                              tenClicked, hunClicked, thoClicked);
+                        },
+                        child: Text(
+                          "終わる",
+                          style:
+                              TextStyle(fontSize: 20.0, color: Colors.black45),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      right: 0,
+                      bottom: 0,
+                      child: InkWell(
+                          onTap: () async {
+                            if (!(await isAchieved(6))) {
+                              setAchieved(6);
+                              getTrophy(trophies[6].title);
+                            }
+                            share(score);
+                          },
+                          child: Image.asset(
+                            "image/twitter_logo.png",
+                            width: 40.0,
+                            height: 40.0,
+                            color: Colors.black45,
+                          )),
+                    )
+                  ],
+                ),
+              ),
+              Positioned(
+                top: 0.0,
+                left: 0.0,
+                child: TextButton(
+                  onPressed: () async {
+                    dropUnko(context);
+                    //TODO: await AudioPlayer.addSound("sound/explosion.mp3");
+                  },
+                  child: Text(
+                    "単位",
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.black45,
                     ),
                   ),
-                  Positioned(
-                    left: 0,
-                    bottom: 0,
-                    child: FlatButton(
-                      onPressed: () async {
-                        if(score == 0 && tanni == 0 && !(await isAchieved(5))) {
-                          setAchieved(5);
-                          getTrophy(trophies[5].title);
-                        }
-
-                        finishDialog(context, score, tanni, oneClicked, tenClicked, hunClicked, thoClicked);
-                      },
-                      child: Text("終わる",
-                        style: TextStyle(
-                            fontSize: 20.0,
-                            color: Colors.black45
+                ),
+              ),
+              Positioned(
+                top: 0.0,
+                right: 0.0,
+                child: TextButton(
+                  onPressed: () async {
+                    arrangeSink.add(true);
+                  },
+                  child: Text(
+                    "整列",
+                    style: TextStyle(fontSize: 20.0, color: Colors.black45),
+                  ),
+                ),
+              ),
+              //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++StartMenu
+              Positioned(
+                bottom: 10.0,
+                left: 0,
+                right: 0,
+                child: Visibility(
+                  visible: startVisible,
+                  child: Center(
+                    child: CarouselSlider(
+                      options: CarouselOptions(
+                          height: 150.0,
+                          viewportFraction: 1.0,
+                          autoPlay: true,
+                          autoPlayInterval: Duration(seconds: 30),
+                          autoPlayAnimationDuration: Duration(seconds: 1),
+                          autoPlayCurve: Curves.easeInOut,
+                          reverse: false,
+                          aspectRatio: 5),
+                      items: shuffledMeigens().map((Meigen m) {
+                        return Builder(
+                          builder: (BuildContext context) {
+                            return Container(
+                              width: MediaQuery.of(context).size.width,
+                              padding: EdgeInsets.symmetric(horizontal: 10.0),
+                              child: ListTile(
+                                title: Text(m.text),
+                                subtitle: Text("―${m.author}"),
+                              ),
+                            );
+                          },
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 50.0,
+                left: 0,
+                right: 0,
+                child: Visibility(
+                  visible: startVisible,
+                  child: Center(
+                    child: Column(
+                      children: <Widget>[
+                        Text("現在の全世界の集計数"),
+                        // TODO: implement
+                        // StreamBuilder<DocumentSnapshot>(
+                        //   stream: firestoreInstance.collection("statistic").document("1").snapshots(),
+                        //   builder: (context, snapshot) {
+                        //     Map<String, dynamic> data = snapshot?.data?.data; //Android -> data, Web -> data()
+                        //     if(data == null) return Text("loading...");
+                        //     return Text(
+                        //       "${data["total"] ?? 114514}T(つらたん)",
+                        //       style: TextStyle(fontSize: 30.0),
+                        //     );
+                        //   }
+                        // ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Positioned.fill(
+                child: Visibility(
+                  visible: startVisible,
+                  child: InkWell(
+                    onTap: () {
+                      setState(() {
+                        startVisible = false;
+                      });
+                    },
+                    child: Container(
+                      color: Colors.black26,
+                      child: Center(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            const Text(
+                              "つらたん",
+                              style: TextStyle(fontSize: 70.0),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      settings: RouteSettings(name: "/tsurai"),
+                                      //builder: (context) => new MainPage(),
+                                      builder: (context) => new MainPage(
+                                        startVisible: false,
+                                      ),
+                                    ));
+                              },
+                              child: Text("Tap to Tsuratan"),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        settings:
+                                            RouteSettings(name: "/settings"),
+                                        builder: (context) =>
+                                            new SettingsPage()));
+                              },
+                              child: Text("Setting"),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        settings:
+                                            RouteSettings(name: "/trophy"),
+                                        builder: (context) =>
+                                            new TrophyPage()));
+                              },
+                              child: Text("Trophies"),
+                            ),
+                          ],
                         ),
                       ),
                     ),
                   ),
-                  Positioned(
-                    right: 0,
-                    bottom: 0,
-                    child: InkWell(
-                      onTap: () async {
-                        if(!(await isAchieved(6))) {
-                          setAchieved(6);
-                          getTrophy(trophies[6].title);
-                        }
-                        share(score);
-                      },
-                      child: Image.asset(
-                        "image/twitter_logo.png",
-                        width: 40.0,
-                        height: 40.0,
-                        color: Colors.black45,
-                      )
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Positioned(
-              top: 0.0,
-              left: 0.0,
-              child: FlatButton(
-                onPressed: () async {
-                  dropUnko(context);
-                  await AudioPlayer.addSound("sound/explosion.mp3");
-                },
-                child: Text(
-                    "単位",
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    color: Colors.black45,
-                  ),
                 ),
-              ),
-            ),
-            Positioned(
-              top: 0.0,
-              right: 0.0,
-              child: FlatButton(
-                onPressed: () async {
-                  arrangeSink.add(true);
-                },
-                child: Text("整列",
-                  style: TextStyle(
-                      fontSize: 20.0,
-                      color: Colors.black45
-                  ),
-                ),
-              ),
-            ),
-            //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++StartMenu
-            Positioned(
-              bottom: 10.0,
-              left: 0,
-              right: 0,
-              child: Visibility(
-                visible: startVisible,
-                child: Center(
-                  child: CarouselSlider(
-                    options: CarouselOptions(
-                      height: 150.0,
-                      viewportFraction: 1.0,
-                      autoPlay: true,
-                      autoPlayInterval: Duration(seconds: 30),
-                      autoPlayAnimationDuration: Duration(seconds: 1),
-                      autoPlayCurve: Curves.easeInOut,
-                      reverse: false,
-                      aspectRatio: 5
-                    ),
-                    items: shuffledMeigens().map((Meigen m) {
-                      return Builder(
-                        builder: (BuildContext context) {
-                          return Container(
-                            width: MediaQuery.of(context).size.width,
-                            padding: EdgeInsets.symmetric(horizontal: 10.0),
-                            child: ListTile(
-                              title: Text(m.text),
-                              subtitle: Text("―${m.author}"),
-                            ),
-                          );
-                        },
-                      );
-                    }).toList(),
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              top: 50.0,
-              left: 0,
-              right: 0,
-              child: Visibility(
-                visible: startVisible,
-                child: Center(
-                  child: Column(
-                    children: <Widget>[
-                      Text("現在の全世界の集計数"),
-                      StreamBuilder<DocumentSnapshot>(
-                        stream: firestoreInstance.collection("statistic").document("1").snapshots(),
-                        builder: (context, snapshot) {
-                          Map<String, dynamic> data = snapshot?.data?.data; //Android -> data, Web -> data()
-                          if(data == null) return Text("loading...");
-                          return Text(
-                            "${data["total"] ?? 114514}T(つらたん)",
-                            style: TextStyle(fontSize: 30.0),
-                          );
-                        }
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Positioned.fill(
-              child: Visibility(
-                visible: startVisible,
-                child: InkWell(
-                  onTap: () {
-                    setState(() {
-                      startVisible = false;
-                    });
-                  },
-                  child: Container(
-                    color: Colors.black26,
-                    child: Center(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          const Text(
-                              "つらたん",
-                            style: TextStyle(fontSize: 70.0),
-                          ),
-                          FlatButton(
-                            onPressed: () {
-                              Navigator.pushReplacement(context,
-                                  MaterialPageRoute(
-                                    settings: RouteSettings(name: "/tsurai"),
-                                    //builder: (context) => new MainPage(),
-                                    builder: (context) => new MainPage(startVisible: false,),
-                                  )
-                              );
-                            },
-                            child: Text("Tap to Tsuratan"),
-                          ),
-                          FlatButton(
-                            onPressed: () {
-                              Navigator.push(context,
-                                MaterialPageRoute(
-                                  settings: RouteSettings(name:"/settings"),
-                                  builder: (context) => new SettingsPage()
-                                )
-                              );
-                            },
-                            child: Text("Setting"),
-                          ),
-                          FlatButton(
-                            onPressed: () {
-                              Navigator.push(context,
-                                  MaterialPageRoute(
-                                      settings: RouteSettings(name:"/trophy"),
-                                      builder: (context) => new TrophyPage()
-                                  )
-                              );
-                            },
-                            child: Text("Trophies"),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            )
-          ],
-        ),
-      )
-    );
+              )
+            ],
+          ),
+        ));
   }
 }
 
@@ -601,10 +617,11 @@ const List<String> tsuramiList = [
   "たんつら"
 ];
 
-void finishDialog(context, score, tanni, oneClicked, tenClicked, hunClicked, thoClicked) async {
+void finishDialog(context, score, tanni, oneClicked, tenClicked, hunClicked,
+    thoClicked) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  var userNickName = prefs.getString("USER_NAME")
-      ?? "Mx." + generateWordPairs().first.asString.toUpperCase();
+  var userNickName = prefs.getString("USER_NAME") ??
+      "Mx." + generateWordPairs().first.asString.toUpperCase();
   prefs.setString("USER_NAME", userNickName);
 
   TextEditingController _controller = TextEditingController();
@@ -617,7 +634,8 @@ void finishDialog(context, score, tanni, oneClicked, tenClicked, hunClicked, tho
         return WillPopScope(
           onWillPop: () async => false,
           child: AlertDialog(
-            title: Text(tsuramiList[(new math.Random()).nextInt(tsuramiList.length)]),
+            title: Text(
+                tsuramiList[(new math.Random()).nextInt(tsuramiList.length)]),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
@@ -634,74 +652,77 @@ void finishDialog(context, score, tanni, oneClicked, tenClicked, hunClicked, tho
               ],
             ),
             actions: <Widget>[
-              new FlatButton(
+              new TextButton(
                   onPressed: () async {
                     share(score);
                   },
-                  child: Text("Twitterで共有")
-              ),
-              new FlatButton(
+                  child: Text("Twitterで共有")),
+              new TextButton(
                   onPressed: () async {
                     var totalScore = prefs.getInt("TOTAL_SCORE") ?? 0;
                     prefs.setInt("TOTAL_SCORE", totalScore + score);
                     var totalTanni = prefs.getInt("TOTAL_TANNI") ?? 0;
                     prefs.setInt("TOTAL_TANNI", totalTanni + tanni);
 
-                    Navigator.pushReplacement(context,
+                    Navigator.pushReplacement(
+                        context,
                         MaterialPageRoute(
                           settings: RouteSettings(name: "/tsurai"),
                           //builder: (context) => new MainPage(),
-                          builder: (context) => new MainPage(startVisible: true,),
-                        )
-                    );
+                          builder: (context) => new MainPage(
+                            startVisible: true,
+                          ),
+                        ));
 
-                    if(_controller.text != "") {
+                    if (_controller.text != "") {
                       prefs.setString("USER_NAME", _controller.text);
                     }
 
-                    sendData(score, _controller.text != "" ? _controller.text : userNickName, oneClicked, tenClicked, hunClicked, thoClicked);
-
+                    sendData(
+                        score,
+                        _controller.text != ""
+                            ? _controller.text
+                            : userNickName,
+                        oneClicked,
+                        tenClicked,
+                        hunClicked,
+                        thoClicked);
                   },
-                  child: Text("終わる")
-              ),
+                  child: Text("終わる")),
             ],
           ),
         );
       },
-      barrierDismissible: false
-  );
+      barrierDismissible: false);
 }
 
-void sendData(score, userNickName, oneClicked, tenClicked, hunClicked, thoClicked) async {
-  firestoreInstance.collection("sample").document("sample").setData({
-    "hoge": score
-  });
-  firestoreInstance.collection("results").add({
-    "username": userNickName,
-    "score": score,
-    "one": oneClicked,
-    "ten": tenClicked,
-    "hun": hunClicked,
-    "tho": thoClicked
-  });
+void sendData(
+    score, userNickName, oneClicked, tenClicked, hunClicked, thoClicked) async {
+  // firestoreInstance
+  //     .collection("sample")
+  //     .document("sample")
+  //     .setData({"hoge": score});
+  // firestoreInstance.collection("results").add({
+  //   "username": userNickName,
+  //   "score": score,
+  //   "one": oneClicked,
+  //   "ten": tenClicked,
+  //   "hun": hunClicked,
+  //   "tho": thoClicked
+  // });
 }
 
 void share(int score) async {
-  var tweetText = "つらたん...× $score \n"
-    + "https://tsuratan.fastriver.dev/";
+  var tweetText = "つらたん...× $score \n" + "https://tsuratan.fastriver.dev/";
 
-  if(kIsWeb) {
+  if (!Platform.isAndroid && !Platform.isIOS) {
     var url = "https://twitter.com/intent/tweet?text=" + tweetText;
     if (await canLaunch(url)) {
       await launch(url);
     } else {
       throw 'Could not launch $url';
     }
-  }
-  else {
-    await FlutterShare.share(
-        title: 'Tsuratan',
-        text: tweetText
-    );
+  } else {
+    await FlutterShare.share(title: 'Tsuratan', text: tweetText);
   }
 }
