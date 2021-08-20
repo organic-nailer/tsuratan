@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP" rel="stylesheet">
+
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="つらいときに押す画面">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="つらたん">
+  <link rel="apple-touch-icon" href="./icons/Icon-192.png">
+
+  <!-- twitter -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@fastriver_org" />
+  <meta name="twitter:creator" content="@fastriver_org" />
+  <meta property="og:url" content="https://tsuratan.fastriver.dev/" />
+  <meta property="og:title" content="つらたん" />
+  <meta property="og:description" content="つらいときに押すボタン、皆で分かち合うつらたん" />
+  <meta property="og:image" content="https://www.mediafire.com/convkey/30cf/x7wxlth85mpzt8i6g.jpg" />
+  <link rel="manifest" href="./manifest.json">
+
+  <title>tsuratan</title>
+</head>
+<body>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+      https://firebase.google.com/docs/web/setup#config-web-app -->
+  <script src="https://www.gstatic.com/firebasejs//7.8.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-analytics.js"></script>
+  <script src="./firebase_init.js"></script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('./flutter_service_worker.js');
+      });
+    }
+  </script>
+
+  <script src="main.dart.js" type="application/javascript"></script>
+</body>
+</html>

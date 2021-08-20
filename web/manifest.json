@@ -1,0 +1,30 @@
+{
+  "name": "つらたん",
+  "short_name": "つらたん",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#3F51B5",
+  "theme_color": "#3F51B5",
+  "description": "つらいときに使う画面",
+  "orientation": "any",
+  "prefer_related_applications": true,
+  "ralated_applications": [
+    {
+      "platform": "play",
+      "url": "https://play.google.com/store/apps/details?id=dev.fastriver.tsuratan",
+      "id": "dev.fastriver.tsuratan"
+    }
+  ],
+  "icons": [
+    {
+      "src": "./icons/Icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./icons/Icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
