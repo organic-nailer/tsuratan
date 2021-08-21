@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -75,6 +76,8 @@ class _MainPageState extends State<MainPage> {
   Sink get arrangeSink => _arrangeController;
   Stream<bool> get arrangeStream => _arrangeController.stream;
 
+  final AudioPlayer _audioPlayer = AudioPlayer();
+
   @override
   void dispose() {
     if (!startVisible) {
@@ -82,6 +85,7 @@ class _MainPageState extends State<MainPage> {
     }
 
     _arrangeController.close();
+    _audioPlayer.dispose();
     super.dispose();
   }
 
@@ -449,7 +453,9 @@ class _MainPageState extends State<MainPage> {
                 child: TextButton(
                   onPressed: () async {
                     dropUnko(context);
-                    //TODO: await AudioPlayer.addSound("sound/explosion.mp3");
+                    if (!Platform.isWindows && !kIsWeb) {
+                      _audioPlayer.play("sound/explosion.mp3", isLocal: true);
+                    }
                   },
                   child: Text(
                     "単位",
