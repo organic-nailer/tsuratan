@@ -22,7 +22,7 @@ import 'package:url_launcher/url_launcher.dart';
 class MainPage extends StatefulWidget {
   final bool startVisible;
 
-  MainPage({Key key, this.startVisible = true}) : super(key: key);
+  MainPage({Key? key, this.startVisible = true}) : super(key: key);
 
   @override
   _MainPageState createState() => _MainPageState();
@@ -36,7 +36,7 @@ const TextStyle scoreTextStyle = TextStyle(
 
 void saveData(score, oneClicked, tenClicked, hunClicked, thoClicked) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  var userNickName = prefs.getString("USER_NAME") ??
+  final userNickName = prefs.getString("USER_NAME") ??
       "Mx." + generateWordPairs().first.asString.toUpperCase();
   prefs.setString("USER_NAME", userNickName);
   sendData(score, userNickName, oneClicked, tenClicked, hunClicked, thoClicked);
@@ -97,7 +97,7 @@ class _MainPageState extends State<MainPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     if (!(await isAchieved(4))) {
-      var totalTanni = prefs.getInt("TOTAL_TANNI") ?? 0;
+      final totalTanni = prefs.getInt("TOTAL_TANNI") ?? 0;
 
       if (totalTanni >= 100) {
         setAchieved(4);
@@ -106,7 +106,7 @@ class _MainPageState extends State<MainPage> {
     }
 
     if (!(await isAchieved(11))) {
-      var totalScore = prefs.getInt("TOTAL_SCORE") ?? 0;
+      final totalScore = prefs.getInt("TOTAL_SCORE") ?? 0;
 
       if (totalScore >= 100000) {
         setAchieved(11);
@@ -115,7 +115,7 @@ class _MainPageState extends State<MainPage> {
     }
 
     if (!(await isAchieved(12))) {
-      var totalScore = prefs.getInt("TOTAL_SCORE") ?? 0;
+      final totalScore = prefs.getInt("TOTAL_SCORE") ?? 0;
 
       if (totalScore >= 1000000) {
         setAchieved(12);
@@ -124,7 +124,7 @@ class _MainPageState extends State<MainPage> {
     }
 
     if (!(await isAchieved(2))) {
-      var nickName = prefs.getString("USER_NAME") ?? "Mx.";
+      final nickName = prefs.getString("USER_NAME") ?? "Mx.";
 
       if (!nickName.contains("Mx.")) {
         setAchieved(2);
@@ -133,7 +133,7 @@ class _MainPageState extends State<MainPage> {
     }
   }
 
-  GlobalKey _floatingStack;
+  GlobalKey? _floatingStack;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
@@ -152,7 +152,8 @@ class _MainPageState extends State<MainPage> {
       getTrophy(trophies[1].title);
     }
 
-    var boxSize = context.size;
+    final boxSize = context.size;
+    if (boxSize == null) return;
     print("$boxSize");
     fireTuratan(value, boxSize);
     setState(() {
@@ -202,7 +203,8 @@ class _MainPageState extends State<MainPage> {
       getTrophy(trophies[3].title);
     }
 
-    var boxSize = context.size;
+    final boxSize = context.size;
+    if (boxSize == null) return;
     setState(() {
       tanni++;
       rakutanium.add(FallingCredit(
@@ -255,12 +257,14 @@ class _MainPageState extends State<MainPage> {
 
                     if (oneClicked > 10000 &&
                         (new math.Random()).nextInt(1000) == 334) {
-                      var boxSize = context.size;
-                      setState(() {
-                        thoButton.update(boxSize.width, boxSize.height);
-                        hunButton.update(boxSize.width, boxSize.height);
-                        tenButton.update(boxSize.width, boxSize.height);
-                      });
+                      final boxSize = context.size;
+                      if (boxSize != null) {
+                        setState(() {
+                          thoButton.update(boxSize.width, boxSize.height);
+                          hunButton.update(boxSize.width, boxSize.height);
+                          tenButton.update(boxSize.width, boxSize.height);
+                        });
+                      }
                     }
                   },
                 ),
@@ -308,7 +312,8 @@ class _MainPageState extends State<MainPage> {
                       top: thoButton.y,
                       child: OutlinedButton(
                         onPressed: () {
-                          var boxSize = context.size;
+                          final boxSize = context.size;
+                          if (boxSize == null) return;
                           setState(() {
                             thoClicked++;
                             incrementScore(thoButton.score, context);
@@ -332,7 +337,8 @@ class _MainPageState extends State<MainPage> {
                       top: hunButton.y,
                       child: OutlinedButton(
                         onPressed: () {
-                          var boxSize = context.size;
+                          final boxSize = context.size;
+                          if (boxSize == null) return;
                           setState(() {
                             hunClicked++;
                             incrementScore(hunButton.score, context);
@@ -356,7 +362,8 @@ class _MainPageState extends State<MainPage> {
                       top: tenButton.y,
                       child: OutlinedButton(
                         onPressed: () {
-                          var boxSize = context.size;
+                          final boxSize = context.size;
+                          if (boxSize == null) return;
                           setState(() {
                             tenClicked++;
                             incrementScore(tenButton.score, context);
@@ -594,10 +601,10 @@ const List<String> tsuramiList = [
   "たんつら"
 ];
 
-void finishDialog(context, score, tanni, oneClicked, tenClicked, hunClicked,
-    thoClicked) async {
+void finishDialog(BuildContext context, int score, int tanni, int oneClicked,
+    int tenClicked, int hunClicked, int thoClicked) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  var userNickName = prefs.getString("USER_NAME") ??
+  final userNickName = prefs.getString("USER_NAME") ??
       "Mx." + generateWordPairs().first.asString.toUpperCase();
   prefs.setString("USER_NAME", userNickName);
 
@@ -636,9 +643,9 @@ void finishDialog(context, score, tanni, oneClicked, tenClicked, hunClicked,
                   child: Text("Twitterで共有")),
               new TextButton(
                   onPressed: () async {
-                    var totalScore = prefs.getInt("TOTAL_SCORE") ?? 0;
+                    final totalScore = prefs.getInt("TOTAL_SCORE") ?? 0;
                     prefs.setInt("TOTAL_SCORE", totalScore + score);
-                    var totalTanni = prefs.getInt("TOTAL_TANNI") ?? 0;
+                    final totalTanni = prefs.getInt("TOTAL_TANNI") ?? 0;
                     prefs.setInt("TOTAL_TANNI", totalTanni + tanni);
 
                     Navigator.pushReplacement(
@@ -690,10 +697,10 @@ void sendData(
 }
 
 void share(int score) async {
-  var tweetText = "つらたん...× $score \n" + "https://tsuratan.fastriver.dev/";
+  final tweetText = "つらたん...× $score \n" + "https://tsuratan.fastriver.dev/";
 
   if (!Platform.isAndroid && !Platform.isIOS) {
-    var url = "https://twitter.com/intent/tweet?text=" + tweetText;
+    final url = "https://twitter.com/intent/tweet?text=" + tweetText;
     if (await canLaunch(url)) {
       await launch(url);
     } else {

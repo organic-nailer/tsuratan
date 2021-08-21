@@ -68,7 +68,7 @@ Future<List<TrophyWithAchieved>> getTrophyAchieved() async {
   return Future.wait(trophies.mapIndexed((i, e) async {
     bool achieved = await isAchieved(i);
     return TrophyWithAchieved(e, i, achieved);
-  }).toList());
+  }));
 }
 
 class TrophyPage extends StatefulWidget {
@@ -129,7 +129,7 @@ class TrophyPageState extends State<TrophyPage> {
                     reverse: false,
                     enableInfiniteScroll: false,
                   ),
-                  items: snapshot.data.map((e) {
+                  items: snapshot.data!.map((e) {
                     return Container(
                       width: MediaQuery.of(context).size.width,
                       child: Card(
@@ -167,7 +167,7 @@ extension MyList<E, T> on List<T> {
       ret.add(f(index, item));
       index = index + 1;
     }
-    return ret;
+    return ret as List<E>;
   }
 
   List<T> nonNull() {

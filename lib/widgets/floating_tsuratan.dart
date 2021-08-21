@@ -3,13 +3,13 @@ import 'package:tsuratan/data/tsuratan_i18n.dart';
 import 'package:tsuratan/widgets/axis_animated_positioned.dart';
 
 class FloatingTsuratan extends StatefulWidget {
-  double startY;
-  double endY;
-  double startX;
-  double fontSize;
+  final double? startY;
+  final double? endY;
+  final double? startX;
+  final double fontSize;
 
   FloatingTsuratan(
-      {Key key, this.startX, this.startY, this.endY, this.fontSize = 40.0})
+      {Key? key, this.startX, this.startY, this.endY, this.fontSize = 40.0})
       : super(key: key);
 
   @override
@@ -18,11 +18,11 @@ class FloatingTsuratan extends StatefulWidget {
 
 class _FloatingTsuratanState extends State<FloatingTsuratan>
     with TickerProviderStateMixin {
-  AnimationController _animationControllerX;
-  AnimationController _animationControllerY;
-  AnimationController _animationControllerRot;
+  late AnimationController _animationControllerX;
+  late AnimationController _animationControllerY;
+  late AnimationController _animationControllerRot;
 
-  AxisAnimatedPositioned _childPositioned;
+  late AxisAnimatedPositioned _childPositioned;
 
   @override
   void initState() {
@@ -47,11 +47,11 @@ class _FloatingTsuratanState extends State<FloatingTsuratan>
     _animationControllerY.addStatusListener((AnimationStatus status) {
       if (status == AnimationStatus.completed) {
         print("completed");
-        _animationControllerX?.stop();
-        _animationControllerY?.stop();
-        _animationControllerRot?.stop();
+        _animationControllerX.stop();
+        _animationControllerY.stop();
+        _animationControllerRot.stop();
 
-        _childPositioned?.toInvisible();
+        _childPositioned.toInvisible();
       }
     });
   }
@@ -65,7 +65,7 @@ class _FloatingTsuratanState extends State<FloatingTsuratan>
                 //.drive(AbsolutePositionTween(begin: 10.0, end: 20.0)),
                 .drive(AbsolutePositionTween(
                     begin: widget.startX ?? 10.0,
-                    end: widget.startX != null ? widget.startX + 10 : 20.0)),
+                    end: widget.startX != null ? widget.startX! + 10 : 20.0)),
             y: _animationControllerY
                 .drive(CurveTween(curve: Curves.linear))
                 .drive(AbsolutePositionTween(
@@ -86,9 +86,9 @@ class _FloatingTsuratanState extends State<FloatingTsuratan>
 
   @override
   void dispose() {
-    _animationControllerX?.dispose();
-    _animationControllerY?.dispose();
-    _animationControllerRot?.dispose();
+    _animationControllerX.dispose();
+    _animationControllerY.dispose();
+    _animationControllerRot.dispose();
     super.dispose();
   }
 }

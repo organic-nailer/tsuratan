@@ -1,28 +1,27 @@
 import 'package:flutter/material.dart';
 
 class DraggablePositioned extends StatefulWidget {
-  final double left;
-  final double top;
+  final double? left;
+  final double? top;
   final Widget child;
 
-  DraggablePositioned({Key key, this.left, this.top, @required this.child})
-      : assert(child != null),
-        super(key: key);
+  DraggablePositioned({Key? key, this.left, this.top, required this.child})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _DraggablePositionedState();
 }
 
 class _DraggablePositionedState extends State<DraggablePositioned> {
-  double left;
-  double top;
+  double left = 0;
+  double top = 0;
 
   @override
   void initState() {
     super.initState();
 
-    left = widget?.left ?? 0;
-    top = widget?.top ?? 0;
+    left = widget.left ?? 0;
+    top = widget.top ?? 0;
   }
 
   @override

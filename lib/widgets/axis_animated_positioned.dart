@@ -3,12 +3,10 @@ import 'package:flutter/material.dart';
 
 class AxisAnimatedPositioned extends AnimatedWidget {
   AxisAnimatedPositioned({
-    Key key,
-    @required this.axis,
-    @required this.child,
-  })  : assert(axis != null),
-        assert(child != null),
-        super(key: key, listenable: axis.getListenable());
+    Key? key,
+    required this.axis,
+    required this.child,
+  }) : super(key: key, listenable: axis.getListenable());
 
   final AxisPair axis;
   final Widget child;
@@ -36,7 +34,7 @@ class AxisPair {
   Animation<double> x;
   Animation<double> y;
 
-  AxisPair({@required this.x, @required this.y});
+  AxisPair({required this.x, required this.y});
 
   Listenable getListenable() {
     return Listenable.merge([x, y]);
@@ -44,7 +42,7 @@ class AxisPair {
 }
 
 class AbsolutePositionTween extends Tween<double> {
-  AbsolutePositionTween({double begin, double end})
+  AbsolutePositionTween({double? begin, double? end})
       : super(begin: begin, end: end);
 }
 

@@ -16,17 +16,17 @@ class DraggableSwimmingPositioned extends StatefulWidget {
 
   final AnimationController controller;
 
-  final GlobalKey<ScaffoldState> scaffoldKey;
+  final GlobalKey<ScaffoldState>? scaffoldKey;
 
   DraggableSwimmingPositioned(
-      {Key key,
-      @required this.child,
-      @required this.controller,
+      {Key? key,
+      required this.child,
+      required this.controller,
       this.x = 0,
       this.y = 0,
       this.velocityX = 0,
       this.velocityY = 0,
-      this.arrangeStream,
+      required this.arrangeStream,
       this.scaffoldKey})
       : super(key: key);
 
@@ -36,12 +36,10 @@ class DraggableSwimmingPositioned extends StatefulWidget {
 
 class _DraggableSwimmingPositionedState
     extends State<DraggableSwimmingPositioned> {
-  double x, y;
-  PolarCoordinates velocityPolar;
-
-  Function listener;
-
-  BuildContext appContext;
+  double x = 0, y = 0;
+  late PolarCoordinates velocityPolar;
+  late Function listener;
+  BuildContext? appContext;
 
   @override
   void initState() {
@@ -58,9 +56,8 @@ class _DraggableSwimmingPositionedState
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    widget.arrangeStream.listen((e) {
-      if (e == null) return;
-      if (e) {
+    widget.arrangeStream.listen((shouldArrange) {
+      if (shouldArrange) {
         x = widget.x;
         y = widget.y;
         velocityPolar =
@@ -69,11 +66,6 @@ class _DraggableSwimmingPositionedState
     });
 
     widget.controller.addListener(() {
-      if (context == null) {
-        widget.controller.removeListener(listener);
-        return;
-      }
-
       var limitX = MediaQuery.of(context).size.width;
       var limitY = MediaQuery.of(context).size.height;
 

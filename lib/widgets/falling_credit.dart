@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:tsuratan/widgets/axis_animated_positioned.dart';
 
 class FallingCredit extends StatefulWidget {
-  final double startY;
-  final double endY;
-  final double startX;
-  final double fontSize;
+  final double? startY;
+  final double? endY;
+  final double? startX;
+  final double? fontSize;
 
-  FallingCredit({Key key, this.startX, this.startY, this.endY, this.fontSize})
+  FallingCredit({Key? key, this.startX, this.startY, this.endY, this.fontSize})
       : super(key: key);
 
   @override
@@ -17,10 +17,10 @@ class FallingCredit extends StatefulWidget {
 
 class _FallingCreditState extends State<FallingCredit>
     with TickerProviderStateMixin {
-  AnimationController _animationControllerX;
-  AnimationController _animationControllerY;
+  late AnimationController _animationControllerX;
+  late AnimationController _animationControllerY;
 
-  AxisAnimatedPositioned _childPositioned;
+  late AxisAnimatedPositioned _childPositioned;
 
   @override
   void initState() {
@@ -37,10 +37,10 @@ class _FallingCreditState extends State<FallingCredit>
 
     _animationControllerY.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        _animationControllerX?.stop();
-        _animationControllerY?.stop();
+        _animationControllerX.stop();
+        _animationControllerY.stop();
 
-        _childPositioned?.toInvisible();
+        _childPositioned.toInvisible();
       }
     });
   }
@@ -51,7 +51,7 @@ class _FallingCreditState extends State<FallingCredit>
       axis: new AxisPair(
           x: _animationControllerX.drive(CurveTween(curve: SinCurve())).drive(
               AbsolutePositionTween(
-                  begin: widget.startX, end: widget.startX + 10)),
+                  begin: widget.startX, end: widget.startX! + 10)),
           y: _animationControllerY
               .drive(CurveTween(curve: Curves.linear))
               .drive(AbsolutePositionTween(
@@ -66,8 +66,8 @@ class _FallingCreditState extends State<FallingCredit>
 
   @override
   void dispose() {
-    _animationControllerX?.dispose();
-    _animationControllerY?.dispose();
+    _animationControllerX.dispose();
+    _animationControllerY.dispose();
     super.dispose();
   }
 }

@@ -9,7 +9,10 @@ class SwimmingStack extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldkey;
 
   SwimmingStack(
-      {Key key, @required this.children, this.arrangeStream, this.scaffoldkey})
+      {Key? key,
+      required this.children,
+      required this.arrangeStream,
+      required this.scaffoldkey})
       : super(key: key);
 
   @override
@@ -18,7 +21,7 @@ class SwimmingStack extends StatefulWidget {
 
 class _SwimmingStackState extends State<SwimmingStack>
     with SingleTickerProviderStateMixin {
-  AnimationController _animationController;
+  late AnimationController _animationController;
 
   List<DraggableSwimmingPositioned> children = [];
 
@@ -64,17 +67,17 @@ class SwimmingPositioned extends StatefulWidget {
   final double y;
   final double velocityX;
   final double velocityY;
-  double limitX;
-  double limitY;
+  double? limitX;
+  double? limitY;
 
   Widget child;
 
   AnimationController controller;
 
   SwimmingPositioned(
-      {Key key,
-      @required this.child,
-      @required this.controller,
+      {Key? key,
+      required this.child,
+      required this.controller,
       this.x = 0,
       this.y = 0,
       this.velocityX = 0,
@@ -86,8 +89,8 @@ class SwimmingPositioned extends StatefulWidget {
 }
 
 class SwimmingPositionState extends State<SwimmingPositioned> {
-  double x, y;
-  PolarCoordinates velocityPolar;
+  double x = 0, y = 0;
+  late PolarCoordinates velocityPolar;
   @override
   void initState() {
     super.initState();
@@ -145,17 +148,13 @@ class SwimmingPositionState extends State<SwimmingPositioned> {
 class PolarCoordinates {
   double r, theta;
 
-  PolarCoordinates(this.r, this.theta)
-      : assert(r != null),
-        assert(theta != null),
-        assert(r >= 0);
+  PolarCoordinates(this.r, this.theta) : assert(r >= 0);
 }
 
+@immutable
 class RectCoordinates {
-  double x, y;
-  RectCoordinates(this.x, this.y)
-      : assert(x != null),
-        assert(y != null);
+  final double x, y;
+  RectCoordinates(this.x, this.y);
 }
 
 PolarCoordinates rect2Polar(RectCoordinates rect) {
