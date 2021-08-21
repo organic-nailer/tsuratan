@@ -3,7 +3,7 @@ import 'package:tsuratan/widgets/swimming_positioned.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
-import 'package:tsuratan/trophy_page.dart';
+import 'package:tsuratan/pages/trophy_page.dart';
 
 class DraggableSwimmingPositioned extends StatefulWidget {
   final double x;
