@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tsuratan/AxisAnimatedPositioned.dart';
+import 'package:tsuratan/widgets/axis_animated_positioned.dart';
 
 class FallingCredit extends StatefulWidget {
   final double startY;

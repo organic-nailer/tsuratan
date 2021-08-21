@@ -6,16 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:english_words/english_words.dart';
-import 'package:tsuratan/FallingCredit.dart';
-import 'package:tsuratan/Meigen.dart';
-import 'package:tsuratan/RandomAppearButtonData.dart';
-import 'package:tsuratan/TrophyPage.dart';
-import 'package:tsuratan/settingsPage.dart';
+import 'package:tsuratan/data/meigen.dart';
+import 'package:tsuratan/random_appear_button_data.dart';
+import 'package:tsuratan/trophy_page.dart';
+import 'package:tsuratan/settings_page.dart';
+import 'package:tsuratan/widgets/falling_credit.dart';
+import 'package:tsuratan/widgets/floating_tsuratan.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:math' as math;
 
-import 'package:tsuratan/FloatingTsuratan.dart';
-import 'package:tsuratan/SwimmingPositioned.dart';
+import 'package:tsuratan/widgets/swimming_positioned.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_share/flutter_share.dart';

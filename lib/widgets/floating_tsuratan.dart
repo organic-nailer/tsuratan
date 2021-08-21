@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tsuratan/AxisAnimatedPositioned.dart';
-import 'package:tsuratan/TsuratanI18n.dart';
+import 'package:tsuratan/data/tsuratan_i18n.dart';
+import 'package:tsuratan/widgets/axis_animated_positioned.dart';
 
 class FloatingTsuratan extends StatefulWidget {
   double startY;

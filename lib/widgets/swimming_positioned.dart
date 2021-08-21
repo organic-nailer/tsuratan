@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
-import 'package:tsuratan/DraggableSwimmingPositioned.dart';
+
+import 'package:tsuratan/widgets/draggable_swimming_positioned.dart';
 
 class SwimmingStack extends StatefulWidget {
   final List<Widget> children;
