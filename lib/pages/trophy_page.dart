@@ -17,7 +17,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tsuratan/entities/trophy_entity.dart';
 import 'package:tsuratan/main.dart';
 
 class TrophyPage extends StatefulWidget {

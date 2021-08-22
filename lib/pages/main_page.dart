@@ -18,6 +18,8 @@ import 'package:tsuratan/widgets/falling_credit.dart';
 import 'package:tsuratan/widgets/floating_tsuratan.dart';
 import 'package:tsuratan/widgets/swimming_positioned.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tsuratan/main.dart';
 
 class MainPage extends StatefulWidget {
   final bool startVisible;
@@ -72,21 +74,22 @@ class _MainPageState extends State<MainPage> {
   List<FloatingTsuratan> tsuratanium = [];
   List<FallingCredit> rakutanium = [];
 
-  // final _auth = AuthBloc(app: null);
-
   @override
   void initState() {
     super.initState();
     startVisible = widget.startVisible;
     score = 0;
-
-    //_auth.add(LoginGuest());
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-
+    context
+        .read(tsuratanViewModelProvider.notifier)
+        .loginGuest()
+        .catchError((e) {
+      print(e);
+    });
     checkTrophy();
   }
 
