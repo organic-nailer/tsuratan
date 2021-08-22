@@ -127,12 +127,13 @@ class _DraggableSwimmingPositionedState
   }
 
   void trophy() async {
-    if (!(await isAchieved(7))) {
-      setAchieved(7);
+    // TODO: implement
+    // if (!(await isAchieved(7))) {
+    //   setAchieved(7);
 
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text("獲得: ${trophies[7].title}"),
-      ));
-    }
+    //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    //     content: Text("獲得: ${trophies[7].title}"),
+    //   ));
+    // }
   }
 }

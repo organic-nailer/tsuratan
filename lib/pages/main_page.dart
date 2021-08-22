@@ -94,43 +94,44 @@ class _MainPageState extends State<MainPage> {
     print("checktrophy");
     await Future.delayed(Duration(seconds: 2));
 
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+// TODO: implement
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    if (!(await isAchieved(4))) {
-      final totalTanni = prefs.getInt("TOTAL_TANNI") ?? 0;
+    // if (!(await isAchieved(4))) {
+    //   final totalTanni = prefs.getInt("TOTAL_TANNI") ?? 0;
 
-      if (totalTanni >= 100) {
-        setAchieved(4);
-        getTrophy(trophies[4].title);
-      }
-    }
+    //   if (totalTanni >= 100) {
+    //     setAchieved(4);
+    //     getTrophy(trophies[4].title);
+    //   }
+    // }
 
-    if (!(await isAchieved(11))) {
-      final totalScore = prefs.getInt("TOTAL_SCORE") ?? 0;
+    // if (!(await isAchieved(11))) {
+    //   final totalScore = prefs.getInt("TOTAL_SCORE") ?? 0;
 
-      if (totalScore >= 100000) {
-        setAchieved(11);
-        getTrophy(trophies[11].title);
-      }
-    }
+    //   if (totalScore >= 100000) {
+    //     setAchieved(11);
+    //     getTrophy(trophies[11].title);
+    //   }
+    // }
 
-    if (!(await isAchieved(12))) {
-      final totalScore = prefs.getInt("TOTAL_SCORE") ?? 0;
+    // if (!(await isAchieved(12))) {
+    //   final totalScore = prefs.getInt("TOTAL_SCORE") ?? 0;
 
-      if (totalScore >= 1000000) {
-        setAchieved(12);
-        getTrophy(trophies[12].title);
-      }
-    }
+    //   if (totalScore >= 1000000) {
+    //     setAchieved(12);
+    //     getTrophy(trophies[12].title);
+    //   }
+    // }
 
-    if (!(await isAchieved(2))) {
-      final nickName = prefs.getString("USER_NAME") ?? "Mx.";
+    // if (!(await isAchieved(2))) {
+    //   final nickName = prefs.getString("USER_NAME") ?? "Mx.";
 
-      if (!nickName.contains("Mx.")) {
-        setAchieved(2);
-        getTrophy(trophies[2].title);
-      }
-    }
+    //   if (!nickName.contains("Mx.")) {
+    //     setAchieved(2);
+    //     getTrophy(trophies[2].title);
+    //   }
+    // }
   }
 
   GlobalKey? _floatingStack;
@@ -142,15 +143,16 @@ class _MainPageState extends State<MainPage> {
   final thoButton = RandomAppearButtonData(1000, -1000, -1000, false);
 
   void incrementScore(int value, BuildContext context) async {
-    if (score == 0 && value == 1 && !(await isAchieved(0))) {
-      setAchieved(0);
-      getTrophy(trophies[0].title);
-    }
+    // TODO: implement
+    // if (score == 0 && value == 1 && !(await isAchieved(0))) {
+    //   setAchieved(0);
+    //   getTrophy(trophies[0].title);
+    // }
 
-    if (value == 10 && !(await isAchieved(1))) {
-      setAchieved(1);
-      getTrophy(trophies[1].title);
-    }
+    // if (value == 10 && !(await isAchieved(1))) {
+    //   setAchieved(1);
+    //   getTrophy(trophies[1].title);
+    // }
 
     final boxSize = context.size;
     if (boxSize == null) return;
@@ -167,28 +169,28 @@ class _MainPageState extends State<MainPage> {
       }
     });
 
-    if (score >= 1000 &&
-        tenClicked == 0 &&
-        hunClicked == 0 &&
-        !(await isAchieved(9))) {
-      setAchieved(9);
-      getTrophy(trophies[9].title);
-    }
+    // if (score >= 1000 &&
+    //     tenClicked == 0 &&
+    //     hunClicked == 0 &&
+    //     !(await isAchieved(9))) {
+    //   setAchieved(9);
+    //   getTrophy(trophies[9].title);
+    // }
 
-    if (score == 10000 &&
-        oneClicked == 10 &&
-        tenClicked == 9 &&
-        hunClicked == 9 &&
-        thoClicked == 9 &&
-        !(await isAchieved(10))) {
-      setAchieved(10);
-      getTrophy(trophies[10].title);
-    }
+    // if (score == 10000 &&
+    //     oneClicked == 10 &&
+    //     tenClicked == 9 &&
+    //     hunClicked == 9 &&
+    //     thoClicked == 9 &&
+    //     !(await isAchieved(10))) {
+    //   setAchieved(10);
+    //   getTrophy(trophies[10].title);
+    // }
 
-    if (score >= 10000 && !(await isAchieved(8))) {
-      setAchieved(8);
-      getTrophy(trophies[8].title);
-    }
+    // if (score >= 10000 && !(await isAchieved(8))) {
+    //   setAchieved(8);
+    //   getTrophy(trophies[8].title);
+    // }
   }
 
   void getTrophy(String title) {
@@ -198,10 +200,11 @@ class _MainPageState extends State<MainPage> {
   }
 
   void dropUnko(BuildContext context) async {
-    if (tanni == 0 && !(await isAchieved(3))) {
-      setAchieved(3);
-      getTrophy(trophies[3].title);
-    }
+    // TODO: implement
+    // if (tanni == 0 && !(await isAchieved(3))) {
+    //   setAchieved(3);
+    //   getTrophy(trophies[3].title);
+    // }
 
     final boxSize = context.size;
     if (boxSize == null) return;
@@ -387,12 +390,13 @@ class _MainPageState extends State<MainPage> {
                       bottom: 0,
                       child: TextButton(
                         onPressed: () async {
-                          if (score == 0 &&
-                              tanni == 0 &&
-                              !(await isAchieved(5))) {
-                            setAchieved(5);
-                            getTrophy(trophies[5].title);
-                          }
+                          // TODO: implement
+                          // if (score == 0 &&
+                          //     tanni == 0 &&
+                          //     !(await isAchieved(5))) {
+                          //   setAchieved(5);
+                          //   getTrophy(trophies[5].title);
+                          // }
 
                           finishDialog(context, score, tanni, oneClicked,
                               tenClicked, hunClicked, thoClicked);
@@ -409,11 +413,12 @@ class _MainPageState extends State<MainPage> {
                       bottom: 0,
                       child: InkWell(
                           onTap: () async {
-                            if (!(await isAchieved(6))) {
-                              setAchieved(6);
-                              getTrophy(trophies[6].title);
-                            }
-                            share(score);
+                            // TODO: implement
+                            // if (!(await isAchieved(6))) {
+                            //   setAchieved(6);
+                            //   getTrophy(trophies[6].title);
+                            // }
+                            // share(score);
                           },
                           child: Image.asset(
                             "image/twitter_logo.png",
