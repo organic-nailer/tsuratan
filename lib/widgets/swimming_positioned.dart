@@ -6,13 +6,8 @@ import 'package:tsuratan/widgets/draggable_swimming_positioned.dart';
 class SwimmingStack extends StatefulWidget {
   final List<Widget> children;
   final Stream<bool> arrangeStream;
-  final GlobalKey<ScaffoldState> scaffoldkey;
 
-  SwimmingStack(
-      {Key? key,
-      required this.children,
-      required this.arrangeStream,
-      required this.scaffoldkey})
+  SwimmingStack({Key? key, required this.children, required this.arrangeStream})
       : super(key: key);
 
   @override
@@ -51,7 +46,6 @@ class _SwimmingStackState extends State<SwimmingStack>
           child: w,
           controller: _animationController,
           arrangeStream: widget.arrangeStream,
-          scaffoldKey: widget.scaffoldkey,
           x: placeX,
           y: 200.0,
           velocityX: (new math.Random()).nextDouble() * 0.1 - 0.05,
@@ -62,88 +56,88 @@ class _SwimmingStackState extends State<SwimmingStack>
   }
 }
 
-class SwimmingPositioned extends StatefulWidget {
-  final double x;
-  final double y;
-  final double velocityX;
-  final double velocityY;
-  double? limitX;
-  double? limitY;
+// class SwimmingPositioned extends StatefulWidget {
+//   final double x;
+//   final double y;
+//   final double velocityX;
+//   final double velocityY;
+//   double? limitX;
+//   double? limitY;
 
-  Widget child;
+//   Widget child;
 
-  AnimationController controller;
+//   AnimationController controller;
 
-  SwimmingPositioned(
-      {Key? key,
-      required this.child,
-      required this.controller,
-      this.x = 0,
-      this.y = 0,
-      this.velocityX = 0,
-      this.velocityY = 0})
-      : super(key: key);
+//   SwimmingPositioned(
+//       {Key? key,
+//       required this.child,
+//       required this.controller,
+//       this.x = 0,
+//       this.y = 0,
+//       this.velocityX = 0,
+//       this.velocityY = 0})
+//       : super(key: key);
 
-  @override
-  State<StatefulWidget> createState() => SwimmingPositionState();
-}
+//   @override
+//   State<StatefulWidget> createState() => SwimmingPositionState();
+// }
 
-class SwimmingPositionState extends State<SwimmingPositioned> {
-  double x = 0, y = 0;
-  late PolarCoordinates velocityPolar;
-  @override
-  void initState() {
-    super.initState();
+// class SwimmingPositionState extends State<SwimmingPositioned> {
+//   double x = 0, y = 0;
+//   late PolarCoordinates velocityPolar;
+//   @override
+//   void initState() {
+//     super.initState();
 
-    x = widget.x;
-    y = widget.y;
+//     x = widget.x;
+//     y = widget.y;
 
-    velocityPolar =
-        rect2Polar(RectCoordinates(widget.velocityX, widget.velocityY));
+//     velocityPolar =
+//         rect2Polar(RectCoordinates(widget.velocityX, widget.velocityY));
 
-    widget.controller.addListener(() {
-      var limitX = MediaQuery.of(context).size.width;
-      var limitY = MediaQuery.of(context).size.height;
+//     widget.controller.addListener(() {
+//       var limitX = MediaQuery.of(context).size.width;
+//       var limitY = MediaQuery.of(context).size.height;
 
-      setState(() {
-        final rect = polar2Rect(velocityPolar);
-        x += rect.x;
-        y += rect.y;
+//       setState(() {
+//         final rect = polar2Rect(velocityPolar);
+//         x += rect.x;
+//         y += rect.y;
 
-        if (x > limitX) {
-          x = 2 * limitX - x;
-          velocityPolar.theta = math.pi - velocityPolar.theta; //X軸で向きを反転
-        } else if (x < 0) {
-          x = -x;
-          velocityPolar.theta = math.pi - velocityPolar.theta; //X軸で向きを反転
-        }
+//         if (x > limitX) {
+//           x = 2 * limitX - x;
+//           velocityPolar.theta = math.pi - velocityPolar.theta; //X軸で向きを反転
+//         } else if (x < 0) {
+//           x = -x;
+//           velocityPolar.theta = math.pi - velocityPolar.theta; //X軸で向きを反転
+//         }
 
-        if (y > limitY) {
-          y = 2 * limitY - y;
-          velocityPolar.theta = 2 * math.pi - velocityPolar.theta; //Y軸で向きを反転
-        } else if (y < 0) {
-          y = -y;
-          velocityPolar.theta = 2 * math.pi - velocityPolar.theta; //Y軸で向きを反転
-        }
+//         if (y > limitY) {
+//           y = 2 * limitY - y;
+//           velocityPolar.theta = 2 * math.pi - velocityPolar.theta; //Y軸で向きを反転
+//         } else if (y < 0) {
+//           y = -y;
+//           velocityPolar.theta = 2 * math.pi - velocityPolar.theta; //Y軸で向きを反転
+//         }
 
-        if (velocityPolar.r > 0.5) {
-          velocityPolar.r *= 0.99;
-        } else if (velocityPolar.r < 0.5) {
-          velocityPolar.r = 0.5;
-        }
-      });
-    });
-  }
+//         if (velocityPolar.r > 0.5) {
+//           velocityPolar.r *= 0.99;
+//         } else if (velocityPolar.r < 0.5) {
+//           velocityPolar.r = 0.5;
+//         }
+//       });
+//     });
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-      left: x,
-      top: y,
-      child: widget.child,
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Positioned(
+//       left: x,
+//       top: y,
+//       child: widget.child,
+//     );
+//   }
+// }
 
 class PolarCoordinates {
   double r, theta;
@@ -151,9 +145,8 @@ class PolarCoordinates {
   PolarCoordinates(this.r, this.theta) : assert(r >= 0);
 }
 
-@immutable
 class RectCoordinates {
-  final double x, y;
+  double x, y;
   RectCoordinates(this.x, this.y);
 }
 

@@ -6,6 +6,7 @@ abstract class ITrophyRepository {
   TrophyEntity? setAchieved(int index);
   bool isAchieved(int index);
   List<TrophyWithAchieved> getTrophies();
+  TrophyEntity? getTrophy(int index);
 }
 
 class TrophyRepository implements ITrophyRepository {
@@ -31,6 +32,9 @@ class TrophyRepository implements ITrophyRepository {
       return TrophyWithAchieved(item, index, isAchieved(index));
     });
   }
+
+  @override
+  TrophyEntity? getTrophy(int index) => trophies[index];
 }
 
 const List<TrophyEntity> trophies = [

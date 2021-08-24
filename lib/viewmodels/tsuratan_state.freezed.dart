@@ -25,7 +25,11 @@ class _$TsuratanStateTearOff {
       int hunClicked = 0,
       int thoClicked = 0,
       List<FloatingTsuratan> tsuratanium = const [],
-      List<FallingCredit> rakutanium = const []}) {
+      List<FallingCredit> rakutanium = const [],
+      RandomAppearButtonData tenButton = RandomAppearButtonData.defaultPosition,
+      RandomAppearButtonData hunButton = RandomAppearButtonData.defaultPosition,
+      RandomAppearButtonData thoButton =
+          RandomAppearButtonData.defaultPosition}) {
     return _TsuratanState(
       startVisible: startVisible,
       score: score,
@@ -36,6 +40,9 @@ class _$TsuratanStateTearOff {
       thoClicked: thoClicked,
       tsuratanium: tsuratanium,
       rakutanium: rakutanium,
+      tenButton: tenButton,
+      hunButton: hunButton,
+      thoButton: thoButton,
     );
   }
 }
@@ -54,6 +61,9 @@ mixin _$TsuratanState {
   int get thoClicked => throw _privateConstructorUsedError;
   List<FloatingTsuratan> get tsuratanium => throw _privateConstructorUsedError;
   List<FallingCredit> get rakutanium => throw _privateConstructorUsedError;
+  RandomAppearButtonData get tenButton => throw _privateConstructorUsedError;
+  RandomAppearButtonData get hunButton => throw _privateConstructorUsedError;
+  RandomAppearButtonData get thoButton => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $TsuratanStateCopyWith<TsuratanState> get copyWith =>
@@ -74,7 +84,10 @@ abstract class $TsuratanStateCopyWith<$Res> {
       int hunClicked,
       int thoClicked,
       List<FloatingTsuratan> tsuratanium,
-      List<FallingCredit> rakutanium});
+      List<FallingCredit> rakutanium,
+      RandomAppearButtonData tenButton,
+      RandomAppearButtonData hunButton,
+      RandomAppearButtonData thoButton});
 }
 
 /// @nodoc
@@ -97,6 +110,9 @@ class _$TsuratanStateCopyWithImpl<$Res>
     Object? thoClicked = freezed,
     Object? tsuratanium = freezed,
     Object? rakutanium = freezed,
+    Object? tenButton = freezed,
+    Object? hunButton = freezed,
+    Object? thoButton = freezed,
   }) {
     return _then(_value.copyWith(
       startVisible: startVisible == freezed
@@ -135,6 +151,18 @@ class _$TsuratanStateCopyWithImpl<$Res>
           ? _value.rakutanium
           : rakutanium // ignore: cast_nullable_to_non_nullable
               as List<FallingCredit>,
+      tenButton: tenButton == freezed
+          ? _value.tenButton
+          : tenButton // ignore: cast_nullable_to_non_nullable
+              as RandomAppearButtonData,
+      hunButton: hunButton == freezed
+          ? _value.hunButton
+          : hunButton // ignore: cast_nullable_to_non_nullable
+              as RandomAppearButtonData,
+      thoButton: thoButton == freezed
+          ? _value.thoButton
+          : thoButton // ignore: cast_nullable_to_non_nullable
+              as RandomAppearButtonData,
     ));
   }
 }
@@ -155,7 +183,10 @@ abstract class _$TsuratanStateCopyWith<$Res>
       int hunClicked,
       int thoClicked,
       List<FloatingTsuratan> tsuratanium,
-      List<FallingCredit> rakutanium});
+      List<FallingCredit> rakutanium,
+      RandomAppearButtonData tenButton,
+      RandomAppearButtonData hunButton,
+      RandomAppearButtonData thoButton});
 }
 
 /// @nodoc
@@ -180,6 +211,9 @@ class __$TsuratanStateCopyWithImpl<$Res>
     Object? thoClicked = freezed,
     Object? tsuratanium = freezed,
     Object? rakutanium = freezed,
+    Object? tenButton = freezed,
+    Object? hunButton = freezed,
+    Object? thoButton = freezed,
   }) {
     return _then(_TsuratanState(
       startVisible: startVisible == freezed
@@ -218,6 +252,18 @@ class __$TsuratanStateCopyWithImpl<$Res>
           ? _value.rakutanium
           : rakutanium // ignore: cast_nullable_to_non_nullable
               as List<FallingCredit>,
+      tenButton: tenButton == freezed
+          ? _value.tenButton
+          : tenButton // ignore: cast_nullable_to_non_nullable
+              as RandomAppearButtonData,
+      hunButton: hunButton == freezed
+          ? _value.hunButton
+          : hunButton // ignore: cast_nullable_to_non_nullable
+              as RandomAppearButtonData,
+      thoButton: thoButton == freezed
+          ? _value.thoButton
+          : thoButton // ignore: cast_nullable_to_non_nullable
+              as RandomAppearButtonData,
     ));
   }
 }
@@ -234,7 +280,10 @@ class _$_TsuratanState with DiagnosticableTreeMixin implements _TsuratanState {
       this.hunClicked = 0,
       this.thoClicked = 0,
       this.tsuratanium = const [],
-      this.rakutanium = const []});
+      this.rakutanium = const [],
+      this.tenButton = RandomAppearButtonData.defaultPosition,
+      this.hunButton = RandomAppearButtonData.defaultPosition,
+      this.thoButton = RandomAppearButtonData.defaultPosition});
 
   @JsonKey(defaultValue: true)
   @override
@@ -263,10 +312,19 @@ class _$_TsuratanState with DiagnosticableTreeMixin implements _TsuratanState {
   @JsonKey(defaultValue: const [])
   @override
   final List<FallingCredit> rakutanium;
+  @JsonKey(defaultValue: RandomAppearButtonData.defaultPosition)
+  @override
+  final RandomAppearButtonData tenButton;
+  @JsonKey(defaultValue: RandomAppearButtonData.defaultPosition)
+  @override
+  final RandomAppearButtonData hunButton;
+  @JsonKey(defaultValue: RandomAppearButtonData.defaultPosition)
+  @override
+  final RandomAppearButtonData thoButton;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'TsuratanState(startVisible: $startVisible, score: $score, tanni: $tanni, oneClicked: $oneClicked, tenClicked: $tenClicked, hunClicked: $hunClicked, thoClicked: $thoClicked, tsuratanium: $tsuratanium, rakutanium: $rakutanium)';
+    return 'TsuratanState(startVisible: $startVisible, score: $score, tanni: $tanni, oneClicked: $oneClicked, tenClicked: $tenClicked, hunClicked: $hunClicked, thoClicked: $thoClicked, tsuratanium: $tsuratanium, rakutanium: $rakutanium, tenButton: $tenButton, hunButton: $hunButton, thoButton: $thoButton)';
   }
 
   @override
@@ -282,7 +340,10 @@ class _$_TsuratanState with DiagnosticableTreeMixin implements _TsuratanState {
       ..add(DiagnosticsProperty('hunClicked', hunClicked))
       ..add(DiagnosticsProperty('thoClicked', thoClicked))
       ..add(DiagnosticsProperty('tsuratanium', tsuratanium))
-      ..add(DiagnosticsProperty('rakutanium', rakutanium));
+      ..add(DiagnosticsProperty('rakutanium', rakutanium))
+      ..add(DiagnosticsProperty('tenButton', tenButton))
+      ..add(DiagnosticsProperty('hunButton', hunButton))
+      ..add(DiagnosticsProperty('thoButton', thoButton));
   }
 
   @override
@@ -313,7 +374,16 @@ class _$_TsuratanState with DiagnosticableTreeMixin implements _TsuratanState {
                     .equals(other.tsuratanium, tsuratanium)) &&
             (identical(other.rakutanium, rakutanium) ||
                 const DeepCollectionEquality()
-                    .equals(other.rakutanium, rakutanium)));
+                    .equals(other.rakutanium, rakutanium)) &&
+            (identical(other.tenButton, tenButton) ||
+                const DeepCollectionEquality()
+                    .equals(other.tenButton, tenButton)) &&
+            (identical(other.hunButton, hunButton) ||
+                const DeepCollectionEquality()
+                    .equals(other.hunButton, hunButton)) &&
+            (identical(other.thoButton, thoButton) ||
+                const DeepCollectionEquality()
+                    .equals(other.thoButton, thoButton)));
   }
 
   @override
@@ -327,7 +397,10 @@ class _$_TsuratanState with DiagnosticableTreeMixin implements _TsuratanState {
       const DeepCollectionEquality().hash(hunClicked) ^
       const DeepCollectionEquality().hash(thoClicked) ^
       const DeepCollectionEquality().hash(tsuratanium) ^
-      const DeepCollectionEquality().hash(rakutanium);
+      const DeepCollectionEquality().hash(rakutanium) ^
+      const DeepCollectionEquality().hash(tenButton) ^
+      const DeepCollectionEquality().hash(hunButton) ^
+      const DeepCollectionEquality().hash(thoButton);
 
   @JsonKey(ignore: true)
   @override
@@ -345,7 +418,10 @@ abstract class _TsuratanState implements TsuratanState {
       int hunClicked,
       int thoClicked,
       List<FloatingTsuratan> tsuratanium,
-      List<FallingCredit> rakutanium}) = _$_TsuratanState;
+      List<FallingCredit> rakutanium,
+      RandomAppearButtonData tenButton,
+      RandomAppearButtonData hunButton,
+      RandomAppearButtonData thoButton}) = _$_TsuratanState;
 
   @override
   bool get startVisible => throw _privateConstructorUsedError;
@@ -365,6 +441,12 @@ abstract class _TsuratanState implements TsuratanState {
   List<FloatingTsuratan> get tsuratanium => throw _privateConstructorUsedError;
   @override
   List<FallingCredit> get rakutanium => throw _privateConstructorUsedError;
+  @override
+  RandomAppearButtonData get tenButton => throw _privateConstructorUsedError;
+  @override
+  RandomAppearButtonData get hunButton => throw _privateConstructorUsedError;
+  @override
+  RandomAppearButtonData get thoButton => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$TsuratanStateCopyWith<_TsuratanState> get copyWith =>

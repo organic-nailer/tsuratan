@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:firedart/auth/firebase_auth.dart';
+import 'package:firedart/firedart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,6 +10,8 @@ import 'package:tsuratan/common/late_provide.dart';
 import 'package:tsuratan/firebase/token_store.dart';
 import 'package:tsuratan/pages/main_page.dart';
 import 'package:tsuratan/repositories/auth_repository.dart';
+import 'package:tsuratan/repositories/nickname_repository.dart';
+import 'package:tsuratan/repositories/records_repository.dart';
 import 'package:tsuratan/repositories/trophy_repository.dart';
 import 'package:tsuratan/viewmodels/trophy_state.dart';
 import 'package:tsuratan/viewmodels/trophy_viewmodel.dart';
@@ -20,24 +23,51 @@ final _sharedPrefProvider = lateProvide<SharedPreferences>();
 final _trophyRepositoryProvider =
     Provider((ref) => TrophyRepository(ref.watch(_sharedPrefProvider)));
 
-final _authRepositoryProvider = Provider((_) => AuthRepository());
+final _authRepositoryProvider = StateNotifierProvider((_) => AuthRepository());
 
+final _nickNameRepository =
+    Provider((ref) => NickNameRepository(ref.watch(_sharedPrefProvider)));
+final _recordsRepository =
+    Provider((ref) => RecordsRepository(ref.watch(_sharedPrefProvider)));
 final trophyViewModelProvider =
     StateNotifierProvider<TrophyViewModel, TrophyState>((ref) =>
         TrophyViewModel(ref.read, ref.watch(_trophyRepositoryProvider)));
 final tsuratanViewModelProvider =
-    StateNotifierProvider<TsuratanViewModel, TsuratanState>((ref) =>
-        TsuratanViewModel(ref.read, ref.watch(_authRepositoryProvider),
-            ref.watch(_trophyRepositoryProvider)));
+    StateNotifierProvider<TsuratanViewModel, TsuratanState>(
+        (ref) => TsuratanViewModel(
+              ref.read,
+              ref.read(_authRepositoryProvider.notifier),
+              ref.watch(_trophyRepositoryProvider),
+              ref.watch(_nickNameRepository),
+              ref.watch(_recordsRepository),
+            ));
+
+final numberArrangeProvider = StateProvider<bool>((_) => false);
+
+final totalTsuratanProvider = StreamProvider.autoDispose<int?>((ref) {
+  final isLoggedIn = ref.watch(_authRepositoryProvider);
+  final dummyController = StreamController<int?>();
+  ref.onDispose(() {
+    dummyController.close();
+  });
+  if (isLoggedIn) {
+    return ref.watch(_recordsRepository).getTotalTsuratanStream();
+  } else {
+    return dummyController.stream;
+  }
+});
 
 final trophyAchievedProvider = StateProvider<String?>((_) {
   return null;
 });
 
+final finishShareDialogProvider = StateProvider<bool>((_) => false);
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   late final SharedPreferences pref;
   FirebaseAuth.initialize(MyTokenStore.apiKey, MyTokenStore());
+  Firestore.initialize(MyTokenStore.projectId);
   await Future.wait([
     Future(() async {
       pref = await SharedPreferences.getInstance();
