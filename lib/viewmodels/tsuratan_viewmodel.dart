@@ -240,6 +240,10 @@ class TsuratanViewModel extends StateNotifier<TsuratanState> {
     _checkAndNotifyTrophy(6);
   }
 
+  void checkDragTrophy() {
+    _checkAndNotifyTrophy(7);
+  }
+
   void _checkAndNotifyTrophy(int index) {
     if (!_trophyRepository.isAchieved(index)) {
       final trophy = _trophyRepository.setAchieved(index);

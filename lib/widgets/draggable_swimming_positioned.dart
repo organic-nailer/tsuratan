@@ -16,6 +16,8 @@ class DraggableSwimmingPositioned extends StatefulWidget {
 
   final GlobalKey<ScaffoldState>? scaffoldKey;
 
+  final VoidCallback? onDragEnd;
+
   const DraggableSwimmingPositioned(
       {Key? key,
       required this.child,
@@ -25,6 +27,7 @@ class DraggableSwimmingPositioned extends StatefulWidget {
       this.velocityX = 0,
       this.velocityY = 0,
       required this.arrangeStream,
+      this.onDragEnd,
       this.scaffoldKey})
       : super(key: key);
 
@@ -117,20 +120,9 @@ class _DraggableSwimmingPositionedState
                 detail.velocity.pixelsPerSecond.dx / 100,
                 detail.velocity.pixelsPerSecond.dy / 100));
           });
-          trophy();
+          widget.onDragEnd?.call();
         },
       ),
     );
-  }
-
-  void trophy() async {
-    // TODO: implement
-    // if (!(await isAchieved(7))) {
-    //   setAchieved(7);
-
-    //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    //     content: Text("獲得: ${trophies[7].title}"),
-    //   ));
-    // }
   }
 }

@@ -6,8 +6,13 @@ import 'package:tsuratan/widgets/draggable_swimming_positioned.dart';
 class SwimmingStack extends StatefulWidget {
   final List<Widget> children;
   final Stream<bool> arrangeStream;
+  final VoidCallback? onDragEnd;
 
-  const SwimmingStack({Key? key, required this.children, required this.arrangeStream})
+  const SwimmingStack(
+      {Key? key,
+      required this.children,
+      required this.arrangeStream,
+      this.onDragEnd})
       : super(key: key);
 
   @override
@@ -50,6 +55,7 @@ class _SwimmingStackState extends State<SwimmingStack>
           y: 200.0,
           velocityX: math.Random().nextDouble() * 0.1 - 0.05,
           velocityY: math.Random().nextDouble() * 0.1 - 0.05,
+          onDragEnd: widget.onDragEnd,
         );
       }).toList(),
     );

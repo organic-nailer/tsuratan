@@ -82,6 +82,9 @@ class MainGameView extends ConsumerWidget {
             ),
           ],
           arrangeStream: watch(numberArrangeProvider).stream,
+          onDragEnd: () {
+            viewModel.checkDragTrophy();
+          },
         )),
         Positioned.fill(
           child: Stack(
@@ -286,14 +289,11 @@ class MainGameView extends ConsumerWidget {
 
                       // context.refresh(tsuratanViewModelProvider);
 
-                      Navigator.pushReplacement(
+                      Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                              settings: const RouteSettings(name: "/tsurai"),
-                              //builder: (context) => new MainPage(),
-                              builder: (context) {
-                                return const MainPage();
-                              }));
+                              builder: (context) => const MainPage()),
+                          (_) => false);
                     },
                     child: const Text("終わる")),
               ],
