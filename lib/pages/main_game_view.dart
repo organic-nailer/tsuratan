@@ -20,6 +20,8 @@ const TextStyle scoreTextStyle = TextStyle(
 
 class MainGameView extends ConsumerWidget {
   final AudioPlayer _audioPlayer = AudioPlayer();
+
+  MainGameView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context, watch) {
     final state = watch(tsuratanViewModelProvider);
@@ -74,7 +76,7 @@ class MainGameView extends ConsumerWidget {
               "${(state.score / 1).floor() % 10}",
               style: scoreTextStyle,
             ),
-            Text(
+            const Text(
               "T",
               style: scoreTextStyle,
             ),
@@ -93,14 +95,14 @@ class MainGameView extends ConsumerWidget {
                     if (boxSize == null) return;
                     viewModel.incrementButton(1000, boxSize);
                   },
-                  child: Text(
+                  child: const Text(
                     "1000つらたん",
                     style: TextStyle(fontSize: 20.0, color: Color(0x40673AB7)),
                   ),
                   style: OutlinedButton.styleFrom(
-                    side: BorderSide(color: Color(0x40673AB7)),
+                    side: const BorderSide(color: Color(0x40673AB7)),
                     backgroundColor: Colors.transparent,
-                    shape: StadiumBorder(),
+                    shape: const StadiumBorder(),
                   ),
                 ),
               ),
@@ -113,14 +115,14 @@ class MainGameView extends ConsumerWidget {
                     if (boxSize == null) return;
                     viewModel.incrementButton(100, boxSize);
                   },
-                  child: Text(
+                  child: const Text(
                     "100つらたん",
                     style: TextStyle(fontSize: 20.0, color: Color(0x402196F3)),
                   ),
                   style: OutlinedButton.styleFrom(
-                    side: BorderSide(color: Color(0x402196F3)),
+                    side: const BorderSide(color: Color(0x402196F3)),
                     backgroundColor: Colors.transparent,
-                    shape: StadiumBorder(),
+                    shape: const StadiumBorder(),
                   ),
                 ),
               ),
@@ -133,14 +135,14 @@ class MainGameView extends ConsumerWidget {
                     if (boxSize == null) return;
                     viewModel.incrementButton(10, boxSize);
                   },
-                  child: Text(
+                  child: const Text(
                     "10つらたん",
                     style: TextStyle(fontSize: 20.0, color: Color(0x4000BCD4)),
                   ),
                   style: OutlinedButton.styleFrom(
-                    side: BorderSide(color: Color(0x4000BCD4)),
+                    side: const BorderSide(color: Color(0x4000BCD4)),
                     backgroundColor: Colors.transparent,
-                    shape: StadiumBorder(),
+                    shape: const StadiumBorder(),
                   ),
                 ),
               ),
@@ -152,7 +154,7 @@ class MainGameView extends ConsumerWidget {
                     viewModel.checkFinishTrophy();
                     finishDialog(context, state);
                   },
-                  child: Text(
+                  child: const Text(
                     "終わる",
                     style: TextStyle(fontSize: 20.0, color: Colors.black45),
                   ),
@@ -186,7 +188,7 @@ class MainGameView extends ConsumerWidget {
                 _audioPlayer.play("sound/explosion.mp3", isLocal: true);
               }
             },
-            child: Text(
+            child: const Text(
               "単位",
               style: TextStyle(
                 fontSize: 20.0,
@@ -202,7 +204,7 @@ class MainGameView extends ConsumerWidget {
             onPressed: () {
               context.read(numberArrangeProvider).state = true;
             },
-            child: Text(
+            child: const Text(
               "整列",
               style: TextStyle(fontSize: 20.0, color: Colors.black45),
             ),
@@ -213,7 +215,8 @@ class MainGameView extends ConsumerWidget {
   }
 
   void share(int score) async {
-    final tweetText = "つらたん...× $score \n" + "https://tsuratan.fastriver.dev/";
+    final tweetText = "つらたん...× $score \n"
+        "https://tsuratan.fastriver.dev/";
 
     if (!Platform.isAndroid && !Platform.isIOS) {
       final url = "https://twitter.com/intent/tweet?text=" + tweetText;
@@ -252,13 +255,13 @@ class MainGameView extends ConsumerWidget {
           return WillPopScope(
             onWillPop: () async => false,
             child: AlertDialog(
-              title: Text(_tsuramiList[
-                  (new math.Random()).nextInt(_tsuramiList.length)]),
+              title: Text(
+                  _tsuramiList[math.Random().nextInt(_tsuramiList.length)]),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   ListTile(
-                    title: Text("ニックネーム"),
+                    title: const Text("ニックネーム"),
                     subtitle: TextField(
                       controller: _controller,
                     ),
@@ -270,12 +273,12 @@ class MainGameView extends ConsumerWidget {
                 ],
               ),
               actions: <Widget>[
-                new TextButton(
+                TextButton(
                     onPressed: () async {
                       share(state.score);
                     },
-                    child: Text("Twitterで共有")),
-                new TextButton(
+                    child: const Text("Twitterで共有")),
+                TextButton(
                     onPressed: () async {
                       await context
                           .read(tsuratanViewModelProvider.notifier)
@@ -286,13 +289,13 @@ class MainGameView extends ConsumerWidget {
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              settings: RouteSettings(name: "/tsurai"),
+                              settings: const RouteSettings(name: "/tsurai"),
                               //builder: (context) => new MainPage(),
                               builder: (context) {
-                                return MainPage();
+                                return const MainPage();
                               }));
                     },
-                    child: Text("終わる")),
+                    child: const Text("終わる")),
               ],
             ),
           );

@@ -6,10 +6,11 @@ import 'package:tsuratan/viewmodels/trophy_state.dart';
 class TrophyViewModel extends StateNotifier<TrophyState> {
   final ITrophyRepository _trophyRepository;
   final Reader read;
-  TrophyViewModel(this.read, this._trophyRepository) : super(TrophyState());
+  TrophyViewModel(this.read, this._trophyRepository)
+      : super(const TrophyState());
 
   void checkTrophy() async {
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 2));
     var data = _trophyRepository.getTrophies();
     final allAchieved = data.every((t) => t.index == 13 || t.isAchieved);
 

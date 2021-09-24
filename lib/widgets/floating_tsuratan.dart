@@ -8,7 +8,7 @@ class FloatingTsuratan extends StatefulWidget {
   final double? startX;
   final double fontSize;
 
-  FloatingTsuratan(
+  const FloatingTsuratan(
       {Key? key, this.startX, this.startY, this.endY, this.fontSize = 40.0})
       : super(key: key);
 
@@ -46,7 +46,6 @@ class _FloatingTsuratanState extends State<FloatingTsuratan>
 
     _animationControllerY.addStatusListener((AnimationStatus status) {
       if (status == AnimationStatus.completed) {
-        print("completed");
         _animationControllerX.stop();
         _animationControllerY.stop();
         _animationControllerRot.stop();
@@ -59,7 +58,7 @@ class _FloatingTsuratanState extends State<FloatingTsuratan>
   @override
   Widget build(BuildContext context) {
     _childPositioned = AxisAnimatedPositioned(
-        axis: new AxisPair(
+        axis: AxisPair(
             x: _animationControllerX
                 .drive(CurveTween(curve: SinCurve()))
                 //.drive(AbsolutePositionTween(begin: 10.0, end: 20.0)),

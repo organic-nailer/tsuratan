@@ -11,10 +11,11 @@ class RandomAppearButtonData {
   const RandomAppearButtonData(this.score, this.x, this.y, this.appear);
 
   RandomAppearButtonData updated(double xLimit, double yLimit) {
-    final x = (new math.Random()).nextDouble() * xLimit;
-    final y = (new math.Random()).nextDouble() * yLimit;
+    final x = (math.Random()).nextDouble() * xLimit;
+    final y = (math.Random()).nextDouble() * yLimit;
+    // ignore: avoid_print
     print("updated $score : x=$x , y=$y");
-    return RandomAppearButtonData(this.score, x, y, this.appear);
+    return RandomAppearButtonData(score, x, y, appear);
   }
 
   static const RandomAppearButtonData defaultPosition =

@@ -7,7 +7,7 @@ abstract class IAuthRepository {
 
 class AuthRepository extends StateNotifier<bool> implements IAuthRepository {
   AuthRepository() : super(false);
-  FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   Future<bool> loginGuest() async {
     try {
@@ -15,6 +15,7 @@ class AuthRepository extends StateNotifier<bool> implements IAuthRepository {
       state = true;
       return true;
     } catch (e) {
+      // ignore: avoid_print
       print(e);
       state = false;
       return false;

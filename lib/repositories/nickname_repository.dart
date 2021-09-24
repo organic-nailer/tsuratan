@@ -8,14 +8,14 @@ abstract class INickNameRepository {
 }
 
 class NickNameRepository implements INickNameRepository {
-  static const _KEY = "USER_NAME";
+  static const _key = "USER_NAME";
   final SharedPreferences prefs;
   NickNameRepository(this.prefs);
   @override
-  String? getSavedNickName() => prefs.getString(_KEY);
+  String? getSavedNickName() => prefs.getString(_key);
   @override
   void saveNickName(String name) {
-    prefs.setString(_KEY, name);
+    prefs.setString(_key, name);
   }
 
   @override

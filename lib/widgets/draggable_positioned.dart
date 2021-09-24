@@ -5,7 +5,8 @@ class DraggablePositioned extends StatefulWidget {
   final double? top;
   final Widget child;
 
-  DraggablePositioned({Key? key, this.left, this.top, required this.child})
+  const DraggablePositioned(
+      {Key? key, this.left, this.top, required this.child})
       : super(key: key);
 
   @override
@@ -34,8 +35,6 @@ class _DraggablePositionedState extends State<DraggablePositioned> {
         child: widget.child,
         childWhenDragging: Container(),
         onDragEnd: (DraggableDetails detail) {
-          print(
-              "offset: ${detail.offset}, velocity: ${detail.velocity.pixelsPerSecond}");
           setState(() {
             left = detail.offset.dx;
             top = detail.offset.dy;

@@ -14,5 +14,5 @@ class TrophyWithAchieved {
   final int index;
   final bool isAchieved;
 
-  TrophyWithAchieved(this.trophy, this.index, this.isAchieved);
+  const TrophyWithAchieved(this.trophy, this.index, this.isAchieved);
 }

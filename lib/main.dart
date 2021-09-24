@@ -75,11 +75,13 @@ void main() async {
   ]);
   runApp(ProviderScope(
     overrides: [_sharedPrefProvider.overrideWithValue(pref)],
-    child: MyApp(),
+    child: const MyApp(),
   ));
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -87,19 +89,19 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.indigo, fontFamily: "Noto Sans JP"
           //fontFamily: "Hiragino Sans",
           ),
-      localizationsDelegates: [
+      localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      supportedLocales: [
+      supportedLocales: const [
         Locale('ja', 'JP'),
       ],
-      locale: Locale("ja", "JP"),
+      locale: const Locale("ja", "JP"),
       home: DefaultTextStyle.merge(
-          style: TextStyle(
+          style: const TextStyle(
             height: 1.5,
           ),
-          child: MainPage()),
+          child: const MainPage()),
     );
   }
 }

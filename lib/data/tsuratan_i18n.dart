@@ -104,11 +104,11 @@ const List<String> internationalTsuratan = [
 
 String randomTsuratan() {
   return internationalTsuratan[
-      (new math.Random()).nextInt(internationalTsuratan.length)];
+      math.Random().nextInt(internationalTsuratan.length)];
 }
 
 String randomTsuratanVSTsuratan() {
-  if ((new math.Random()).nextBool()) {
+  if (math.Random().nextBool()) {
     return "つらたん";
   } else {
     return randomTsuratan();

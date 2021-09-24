@@ -16,25 +16,25 @@ abstract class IRecordsRepository {
 }
 
 class RecordsRepository implements IRecordsRepository {
-  Firestore _firestore = Firestore.instance;
-  static const _SCORE_KEY = "TOTAL_SCORE";
-  static const _TANNI_KEY = "TOTAL_TANNI";
+  final Firestore _firestore = Firestore.instance;
+  static const _scoreKey = "TOTAL_SCORE";
+  static const _tanniKey = "TOTAL_TANNI";
 
   final SharedPreferences _prefs;
   RecordsRepository(this._prefs);
 
   @override
-  int getTotalScore() => _prefs.getInt(_SCORE_KEY) ?? 0;
+  int getTotalScore() => _prefs.getInt(_scoreKey) ?? 0;
   @override
   void addTotalScore(int score) {
-    _prefs.setInt(_SCORE_KEY, getTotalScore() + score);
+    _prefs.setInt(_scoreKey, getTotalScore() + score);
   }
 
   @override
-  int getTotalTanni() => _prefs.getInt(_TANNI_KEY) ?? 0;
+  int getTotalTanni() => _prefs.getInt(_tanniKey) ?? 0;
   @override
   void addTotalTanni(int tanni) {
-    _prefs.setInt(_TANNI_KEY, getTotalTanni() + tanni);
+    _prefs.setInt(_tanniKey, getTotalTanni() + tanni);
   }
 
   @override

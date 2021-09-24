@@ -7,6 +7,8 @@ import 'package:tsuratan/pages/settings_page.dart';
 import 'package:tsuratan/pages/trophy_page.dart';
 
 class MainStartView extends ConsumerWidget {
+  const MainStartView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context, watch) {
     return Stack(
@@ -21,8 +23,8 @@ class MainStartView extends ConsumerWidget {
                   height: 150.0,
                   viewportFraction: 1.0,
                   autoPlay: true,
-                  autoPlayInterval: Duration(seconds: 30),
-                  autoPlayAnimationDuration: Duration(seconds: 1),
+                  autoPlayInterval: const Duration(seconds: 30),
+                  autoPlayAnimationDuration: const Duration(seconds: 1),
                   autoPlayCurve: Curves.easeInOut,
                   reverse: false,
                   aspectRatio: 5),
@@ -31,7 +33,7 @@ class MainStartView extends ConsumerWidget {
                   builder: (BuildContext context) {
                     return Container(
                       width: MediaQuery.of(context).size.width,
-                      padding: EdgeInsets.symmetric(horizontal: 10.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: ListTile(
                         title: Text(m.text),
                         subtitle: Text("―${m.author}"),
@@ -50,15 +52,15 @@ class MainStartView extends ConsumerWidget {
           child: Center(
             child: Column(
               children: <Widget>[
-                Text("現在の全世界の集計数"),
+                const Text("現在の全世界の集計数"),
                 StreamBuilder<int?>(
                     stream: watch(totalTsuratanProvider.stream),
                     builder: (context, snapshot) {
                       final data = snapshot.data;
-                      if (data == null) return Text("loading...");
+                      if (data == null) return const Text("loading...");
                       return Text(
                         "$data T(つらたん)",
-                        style: TextStyle(fontSize: 30.0),
+                        style: const TextStyle(fontSize: 30.0),
                       );
                     }),
                 // StreamBuilder<DocumentSnapshot>(
@@ -97,27 +99,28 @@ class MainStartView extends ConsumerWidget {
                             .read(tsuratanViewModelProvider.notifier)
                             .startGame();
                       },
-                      child: Text("Tap to Tsuratan"),
+                      child: const Text("Tap to Tsuratan"),
                     ),
                     TextButton(
                       onPressed: () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                settings: RouteSettings(name: "/settings"),
-                                builder: (context) => new SettingsPage()));
+                                settings:
+                                    const RouteSettings(name: "/settings"),
+                                builder: (context) => const SettingsPage()));
                       },
-                      child: Text("Setting"),
+                      child: const Text("Setting"),
                     ),
                     TextButton(
                       onPressed: () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                settings: RouteSettings(name: "/trophy"),
-                                builder: (context) => new TrophyPage()));
+                                settings: const RouteSettings(name: "/trophy"),
+                                builder: (context) => const TrophyPage()));
                       },
-                      child: Text("Trophies"),
+                      child: const Text("Trophies"),
                     ),
                   ],
                 ),

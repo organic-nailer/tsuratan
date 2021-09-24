@@ -5,6 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tsuratan/main.dart';
 
 class MainPage extends StatefulWidget {
+  const MainPage({Key? key}) : super(key: key);
+
   @override
   _MainPageState createState() => _MainPageState();
 }
@@ -17,6 +19,7 @@ class _MainPageState extends State<MainPage> {
         .read(tsuratanViewModelProvider.notifier)
         .loginGuest()
         .catchError((e) {
+      // ignore: avoid_print
       print(e);
     });
     context.read(tsuratanViewModelProvider.notifier).checkTrophy();
@@ -31,7 +34,7 @@ class _MainPageState extends State<MainPage> {
           children: <Widget>[
             Positioned.fill(child: MainGameView()),
             if (watch(tsuratanViewModelProvider).startVisible)
-              Positioned.fill(child: MainStartView())
+              const Positioned.fill(child: MainStartView())
           ],
         );
       }),

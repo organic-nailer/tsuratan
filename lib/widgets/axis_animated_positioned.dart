@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class AxisAnimatedPositioned extends AnimatedWidget {
   AxisAnimatedPositioned({
     Key? key,

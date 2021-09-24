@@ -20,12 +20,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tsuratan/main.dart';
 
 class TrophyPage extends StatefulWidget {
+  const TrophyPage({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => TrophyPageState();
 }
 
 class TrophyPageState extends State<TrophyPage> {
-  final _scaffoldKey = new GlobalKey<ScaffoldMessengerState>();
+  final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
 
   @override
   void didChangeDependencies() {
@@ -38,7 +40,7 @@ class TrophyPageState extends State<TrophyPage> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text("トロフィー"),
+        title: const Text("トロフィー"),
       ),
       body: ProviderListener(
         provider: trophyAchievedProvider,
@@ -49,7 +51,7 @@ class TrophyPageState extends State<TrophyPage> {
         child: Center(
           child: Consumer(builder: (context, watch, child) {
             final state = watch(trophyViewModelProvider);
-            if (state.trophies.isEmpty) return Text("loading...");
+            if (state.trophies.isEmpty) return const Text("loading...");
             return CarouselSlider(
                 options: CarouselOptions(
                   aspectRatio: 0.8,
@@ -58,21 +60,21 @@ class TrophyPageState extends State<TrophyPage> {
                   enableInfiniteScroll: false,
                 ),
                 items: state.trophies.map((e) {
-                  return Container(
+                  return SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: Card(
                       child: Column(
                         children: <Widget>[
                           Text(
                             e.trophy.title,
-                            style: TextStyle(fontSize: 30.0),
+                            style: const TextStyle(fontSize: 30.0),
                           ),
                           Image.asset(e.isAchieved
                               ? "image/torofi_gold.png"
                               : "image/torofi_gray.png"),
                           Text(
                             e.trophy.description,
-                            style: TextStyle(fontSize: 20.0),
+                            style: const TextStyle(fontSize: 20.0),
                           )
                         ],
                       ),

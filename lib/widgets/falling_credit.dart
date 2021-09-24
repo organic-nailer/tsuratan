@@ -8,7 +8,7 @@ class FallingCredit extends StatefulWidget {
   final double? startX;
   final double? fontSize;
 
-  FallingCredit({Key? key, this.startX, this.startY, this.endY, this.fontSize})
+  const FallingCredit({Key? key, this.startX, this.startY, this.endY, this.fontSize})
       : super(key: key);
 
   @override
@@ -48,7 +48,7 @@ class _FallingCreditState extends State<FallingCredit>
   @override
   Widget build(BuildContext context) {
     _childPositioned = AxisAnimatedPositioned(
-      axis: new AxisPair(
+      axis: AxisPair(
           x: _animationControllerX.drive(CurveTween(curve: SinCurve())).drive(
               AbsolutePositionTween(
                   begin: widget.startX, end: widget.startX! + 10)),
@@ -57,8 +57,8 @@ class _FallingCreditState extends State<FallingCredit>
               .drive(AbsolutePositionTween(
                   begin: widget.startY, end: widget.endY))),
       child: Text(
-        "単位" + "\n 💩 ",
-        style: TextStyle(fontSize: widget.fontSize, color: Color(0x80FFC107)),
+        "単位" "\n 💩 ",
+        style: TextStyle(fontSize: widget.fontSize, color: const Color(0x80FFC107)),
       ),
     );
     return _childPositioned;

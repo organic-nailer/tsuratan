@@ -3,8 +3,6 @@ import 'package:tsuratan/widgets/swimming_positioned.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
-import 'package:tsuratan/pages/trophy_page.dart';
-
 class DraggableSwimmingPositioned extends StatefulWidget {
   final double x;
   final double y;
@@ -18,7 +16,7 @@ class DraggableSwimmingPositioned extends StatefulWidget {
 
   final GlobalKey<ScaffoldState>? scaffoldKey;
 
-  DraggableSwimmingPositioned(
+  const DraggableSwimmingPositioned(
       {Key? key,
       required this.child,
       required this.controller,
@@ -108,11 +106,10 @@ class _DraggableSwimmingPositionedState
       top: y,
       child: Draggable(
         feedback: Material(child: widget.child),
-        child: Container(padding: EdgeInsets.all(3.0), child: widget.child),
+        child:
+            Container(padding: const EdgeInsets.all(3.0), child: widget.child),
         childWhenDragging: Container(),
         onDragEnd: (DraggableDetails detail) {
-          print(
-              "offset: ${detail.offset}, velocity: ${detail.velocity.pixelsPerSecond}");
           setState(() {
             x = detail.offset.dx;
             y = detail.offset.dy;

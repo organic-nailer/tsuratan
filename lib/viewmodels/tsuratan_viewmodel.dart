@@ -20,10 +20,10 @@ class TsuratanViewModel extends StateNotifier<TsuratanState> {
   final Reader read;
   TsuratanViewModel(this.read, this._authRepository, this._trophyRepository,
       this._nickNameRepository, this._recordsRepository)
-      : super(TsuratanState());
+      : super(const TsuratanState());
 
   void reset() {
-    state = TsuratanState();
+    state = const TsuratanState();
   }
 
   Future loginGuest() async {
@@ -38,7 +38,7 @@ class TsuratanViewModel extends StateNotifier<TsuratanState> {
   }
 
   void _updateButtonPosition(Size canvasSize) {
-    if (state.oneClicked > 10000 && (new math.Random()).nextInt(1000) == 334) {
+    if (state.oneClicked > 10000 && math.Random().nextInt(1000) == 334) {
       state = state.copyWith(
         tenButton: state.tenButton.updated(canvasSize.width, canvasSize.height),
         hunButton: state.hunButton.updated(canvasSize.width, canvasSize.height),
@@ -81,7 +81,7 @@ class TsuratanViewModel extends StateNotifier<TsuratanState> {
   }
 
   Future checkTrophy() async {
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 2));
 
     if (!_trophyRepository.isAchieved(4)) {
       final totalTanni = _recordsRepository.getTotalTanni();

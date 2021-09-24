@@ -7,7 +7,7 @@ class SwimmingStack extends StatefulWidget {
   final List<Widget> children;
   final Stream<bool> arrangeStream;
 
-  SwimmingStack({Key? key, required this.children, required this.arrangeStream})
+  const SwimmingStack({Key? key, required this.children, required this.arrangeStream})
       : super(key: key);
 
   @override
@@ -48,8 +48,8 @@ class _SwimmingStackState extends State<SwimmingStack>
           arrangeStream: widget.arrangeStream,
           x: placeX,
           y: 200.0,
-          velocityX: (new math.Random()).nextDouble() * 0.1 - 0.05,
-          velocityY: (new math.Random()).nextDouble() * 0.1 - 0.05,
+          velocityX: math.Random().nextDouble() * 0.1 - 0.05,
+          velocityY: math.Random().nextDouble() * 0.1 - 0.05,
         );
       }).toList(),
     );
