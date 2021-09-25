@@ -33,6 +33,20 @@ jobs:
         env:
           FIREBASE_WEB_INIT: ${{ secrets.FIREBASE_WEB_INIT }}
         run: echo $FIREBASE_WEB_INIT | base64 --decode > ./web/firebase_init.js
+      # Secrets からrelease.jks を生成
+      - name: Create release.jks
+        run: echo -n ${{ secrets.ANDROID_KEY_JKS }} | base64 -d > android/release.jks # -n で改行を消している
+      # Secrets から key.properties を生成
+      # key.properties には各種シークレットな文字列なり file name なりを渡している
+      - name: Create key.properties
+      # > android/key.properties で 上書き
+      # >> android/key.properties で　追加
+        run: |
+          echo 'storeFile=release.jks' > android/key.properties
+          echo 'storePassword=${{ secrets.ANDROID_STORE_PASSWORD }}' >> android/key.properties
+          echo 'keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}' >> android/key.properties
+          echo 'keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}' >> android/key.properties
+
       - name: Build Android App
         run: flutter build appbundle --debug
       - name: Build Web App
