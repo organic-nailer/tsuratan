@@ -37,3 +37,4 @@ lib/generated_plugin_registrant.dart
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 
 lib/firebase/token_store.dart
+android/api-5821867621124929152-478782-3441dd16eff6.json
