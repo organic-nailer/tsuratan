@@ -30,11 +30,11 @@ jobs:
       - name: Create ./lib/firebase/token_store
         env:
           FIREBASE_TOKEN_STORE: ${{ secrets.FIREBASE_TOKEN_STORE }}
-        run: mkdir ./lib/firebase && echo $FIREBASE_TOKEN_STORE | base64 --decode > ./lib/firebase/token_store.dart && ls ./lib && cat ./lib/firebase/token_store.dart
+        run: mkdir ./lib/firebase && echo -n $FIREBASE_TOKEN_STORE | base64 --decode > ./lib/firebase/token_store.dart
       - name: Create ./web/firebase_init
         env:
           FIREBASE_WEB_INIT: ${{ secrets.FIREBASE_WEB_INIT }}
-        run: echo $FIREBASE_WEB_INIT | base64 --decode > ./web/firebase_init.js
+        run: echo -n $FIREBASE_WEB_INIT | base64 --decode > ./web/firebase_init.js
       # Secrets からrelease.jks を生成
       - name: Create release.jks
         run: echo -n ${{ secrets.ANDROID_KEY_JKS }} | base64 -d > android/release.jks # -n で改行を消している
