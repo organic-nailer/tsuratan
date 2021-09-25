@@ -22,7 +22,7 @@ jobs:
       - name: Create ./lib/firebase/token_store
         env:
           FIREBASE_TOKEN_STORE: ${{ secrets.FIREBASE_TOKEN_STORE }}
-        run: echo $FIREBASE_TOKEN_STORE | base64 --decode > ./lib/firebase/token_store.dart
+        run: mkdir ./lib/firebase && echo $FIREBASE_TOKEN_STORE | base64 --decode > ./lib/firebase/token_store.dart
       - name: Create ./web/firebase_init
         env:
           FIREBASE_WEB_INIT: ${{ secrets.FIREBASE_WEB_INIT }}
