@@ -1,0 +1,37 @@
+name: Deploy to Firebase Hosting on pushing tags
+'on':
+  push:
+    tags:
+      - 'v*'
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: "11.x"
+      - name: Install Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: "2.5.1"
+      - name: Install Dependency
+        run: flutter pub get
+      - name: Create ./lib/firebase/token_store
+        env:
+          FIREBASE_TOKEN_STORE: ${{ secrets.FIREBASE_TOKEN_STORE }}
+        run: echo $FIREBASE_TOKEN_STORE | base64 --decode > ./lib/firebase/token_store.dart
+      - name: Create ./web/firebase_init
+        env:
+          FIREBASE_WEB_INIT: ${{ secrets.FIREBASE_WEB_INIT }}
+        run: echo $FIREBASE_WEB_INIT | base64 --decode > ./web/firebase_init.js
+      - name: Build Web App
+        run: flutter build web
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TSURATAN_F5DA2 }}'
+          channelId: live
+          projectId: tsuratan-f5da2
