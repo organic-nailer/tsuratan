@@ -12,6 +12,8 @@ jobs:
   build:
     name: "build"
     runs-on: ubuntu-latest
+    environment:
+      name: "ビルド用"
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
