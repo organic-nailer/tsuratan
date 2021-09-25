@@ -6,6 +6,8 @@ name: Deploy to Firebase Hosting on pushing tags
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: "ビルド用"
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -27,6 +29,22 @@ jobs:
         env:
           FIREBASE_WEB_INIT: ${{ secrets.FIREBASE_WEB_INIT }}
         run: echo $FIREBASE_WEB_INIT | base64 --decode > ./web/firebase_init.js
+      - name: Create release.jks
+        run: echo -n ${{ secrets.ANDROID_KEY_JKS }} | base64 -d > android/release.jks # -n で改行を消している
+      # Secrets から key.properties を生成
+      # key.properties には各種シークレットな文字列なり file name なりを渡している
+      - name: Create key.properties
+      # > android/key.properties で 上書き
+      # >> android/key.properties で　追加
+        run: |
+          echo 'storeFile=release.jks' > android/key.properties
+          echo 'storePassword=${{ secrets.ANDROID_STORE_PASSWORD }}' >> android/key.properties
+          echo 'keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}' >> android/key.properties
+          echo 'keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}' >> android/key.properties
+      - name: Create google-services.json
+        env:
+          GOOGLE_SERVICES_ANDROID: ${{ secrets.GOOGLE_SERVICES_ANDROID }}
+        run: echo $GOOGLE_SERVICES_ANDROID | base64 --decode > ./android/app/google-services.json
       - name: Build Web App
         run: flutter build web
       - uses: FirebaseExtended/action-hosting-deploy@v0
