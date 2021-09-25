@@ -55,4 +55,4 @@ jobs:
       - name: Build Android App
         run: flutter build appbundle --debug
       - name: Build Web App
-        run: flutter build web --debug
+        run: flutter build web
