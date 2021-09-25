@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tsuratan/main.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -27,16 +29,23 @@ class SettingsPage extends StatelessWidget {
                   "トップ画面では全世界の遊んだ合計がみられます \n"
                   "Twitterマークを押してつらたんさを共有しよう"),
             ),
-            ListTile(
-              title: const Text("OpenSource Licence"),
-              onTap: () {
-                showLicensePage(
-                  context: context,
-                  applicationName: 'Tsuratan by Fastriver_org',
-                  applicationVersion: '1.0.0',
-                );
-              },
-            )
+            Consumer(builder: (context, watch, child) {
+              final packageInfo = watch(packageInfoProvider);
+              return ListTile(
+                title: const Text("OpenSource Licence"),
+                onTap: () {
+                  print(packageInfo.appName);
+                  print(packageInfo.version);
+                  print(packageInfo.buildNumber);
+                  print(packageInfo.packageName);
+                  showLicensePage(
+                    context: context,
+                    applicationName: 'Tsuratan by Fastriver_org',
+                    applicationVersion: packageInfo.version,
+                  );
+                },
+              );
+            })
           ],
         ),
       ),

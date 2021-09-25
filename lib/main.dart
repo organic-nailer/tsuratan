@@ -5,6 +5,7 @@ import 'package:firedart/firedart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tsuratan/common/late_provide.dart';
 import 'package:tsuratan/firebase/token_store.dart';
@@ -19,6 +20,7 @@ import 'package:tsuratan/viewmodels/tsuratan_state.dart';
 import 'package:tsuratan/viewmodels/tsuratan_viewmodel.dart';
 
 final _sharedPrefProvider = lateProvide<SharedPreferences>();
+final packageInfoProvider = lateProvide<PackageInfo>();
 
 final _trophyRepositoryProvider =
     Provider((ref) => TrophyRepository(ref.watch(_sharedPrefProvider)));
@@ -66,15 +68,20 @@ final finishShareDialogProvider = StateProvider<bool>((_) => false);
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   late final SharedPreferences pref;
+  late final PackageInfo packageInfo;
   FirebaseAuth.initialize(MyTokenStore.apiKey, MyTokenStore());
   Firestore.initialize(MyTokenStore.projectId);
   await Future.wait([
     Future(() async {
       pref = await SharedPreferences.getInstance();
+      packageInfo = await PackageInfo.fromPlatform();
     })
   ]);
   runApp(ProviderScope(
-    overrides: [_sharedPrefProvider.overrideWithValue(pref)],
+    overrides: [
+      _sharedPrefProvider.overrideWithValue(pref),
+      packageInfoProvider.overrideWithValue(packageInfo),
+    ],
     child: const MyApp(),
   ));
 }
