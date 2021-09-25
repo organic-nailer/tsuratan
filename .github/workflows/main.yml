@@ -13,22 +13,22 @@ jobs:
     name: "build"
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-      - name: Setup Java
-        uses: actions/setup-java@v1
-        with:
-          java-version: "11.x"
-      - name: Install Flutter
-        uses: subosito/flutter-action@v1
-        with:
-          flutter-version: "2.5.1"
-      - name: Install Dependency
-        run: flutter pub get
+      # - name: Checkout Repository
+      #   uses: actions/checkout@v2
+      # - name: Setup Java
+      #   uses: actions/setup-java@v1
+      #   with:
+      #     java-version: "11.x"
+      # - name: Install Flutter
+      #   uses: subosito/flutter-action@v1
+      #   with:
+      #     flutter-version: "2.5.1"
+      # - name: Install Dependency
+      #   run: flutter pub get
       - name: Create ./lib/firebase/token_store
         env:
           FIREBASE_TOKEN_STORE: ${{ secrets.FIREBASE_TOKEN_STORE }}
-        run: mkdir ./lib/firebase && echo $FIREBASE_TOKEN_STORE | base64 --decode > ./lib/firebase/token_store.dart && ls ./lib
+        run: mkdir ./lib/firebase && echo $FIREBASE_TOKEN_STORE | base64 --decode > ./lib/firebase/token_store.dart && ls ./lib && cat ./lib/firebase/token_store.dart
       - name: Create ./web/firebase_init
         env:
           FIREBASE_WEB_INIT: ${{ secrets.FIREBASE_WEB_INIT }}
@@ -47,7 +47,7 @@ jobs:
           echo 'keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}' >> android/key.properties
           echo 'keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}' >> android/key.properties
 
-      - name: Build Android App
-        run: flutter build appbundle --debug
-      - name: Build Web App
-        run: flutter build web --debug
+      # - name: Build Android App
+      #   run: flutter build appbundle --debug
+      # - name: Build Web App
+      #   run: flutter build web --debug
