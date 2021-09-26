@@ -38,6 +38,9 @@ jobs:
       # Secrets からrelease.jks を生成
       - name: Create release.jks
         run: echo -n ${{ secrets.ANDROID_KEY_JKS }} | base64 -d > android/release.jks # -n で改行を消している
+      # Secrets から service-account-ke.json を生成
+      - name: Create service-account-ke.json
+        run: echo -n ${{ secrets.SERVICE_ACCOUNT_KEY_JSON }} | base64 -d > android/service-account-ke.json
       # Secrets から key.properties を生成
       # key.properties には各種シークレットな文字列なり file name なりを渡している
       - name: Create key.properties
