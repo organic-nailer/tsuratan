@@ -32,7 +32,7 @@ jobs:
       - name: Create release.jks
         run: echo -n ${{ secrets.ANDROID_KEY_JKS }} | base64 -d > android/release.jks # -n で改行を消している
       # Secrets から service-account-ke.json を生成
-      - name: Create release.jks
+      - name: Create service-account-ke.json
         run: echo -n ${{ secrets.SERVICE_ACCOUNT_KEY_JSON }} | base64 -d > android/service-account-ke.json
       # Secrets から key.properties を生成
       # key.properties には各種シークレットな文字列なり file name なりを渡している
@@ -49,14 +49,14 @@ jobs:
         env:
           GOOGLE_SERVICES_ANDROID: ${{ secrets.GOOGLE_SERVICES_ANDROID }}
         run: echo $GOOGLE_SERVICES_ANDROID | base64 --decode > ./android/app/google-services.json
-      - name: Build Web App
-        run: flutter build web
-      - uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TSURATAN_F5DA2 }}'
-          channelId: live
-          projectId: tsuratan-f5da2
+      # - name: Build Web App
+      #   run: flutter build web
+      # - uses: FirebaseExtended/action-hosting-deploy@v0
+      #   with:
+      #     repoToken: '${{ secrets.GITHUB_TOKEN }}'
+      #     firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TSURATAN_F5DA2 }}'
+      #     channelId: live
+      #     projectId: tsuratan-f5da2
       - name: Upload to GooglePlayStore
         run: ./gradlew publishReleaseBundle
         working-directory: ./android
