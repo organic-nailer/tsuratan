@@ -30,7 +30,7 @@ jobs:
           FIREBASE_WEB_INIT: ${{ secrets.FIREBASE_WEB_INIT }}
         run: echo $FIREBASE_WEB_INIT | base64 --decode > ./web/firebase_init.js
       - name: Create release.jks
-        run: echo -n ${{ secrets.ANDROID_KEY_JKS }} | base64 -d > android/release.jks # -n で改行を消している
+        run: echo -n ${{ secrets.ANDROID_KEY_JKS }} | base64 -d > android/app/release.jks # -n で改行を消している
       # Secrets から service-account-ke.json を生成
       - name: Create service-account-ke.json
         run: echo -n ${{ secrets.SERVICE_ACCOUNT_KEY_JSON }} | base64 -d > android/service-account-ke.json
